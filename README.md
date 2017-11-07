@@ -18,10 +18,13 @@ _Note:_ this project is still experimental and not ready for production.
 
 ### Setup
 
+Create a Kubernetes cluster using Minikube:
+
 ```
 ./scripts/setup_kubernetes.sh
 ```
 
+Create a private local registry:
 ```
 ./tools/registry/create_registry.sh --docker-user mario -e mario.mario@bros.com
 ```
@@ -35,7 +38,7 @@ Generate the gRPC configuration for a service:
 Build a service:
 
 ```
-./build.sh -s alfa
+./scripts/build.sh -s alfa
 ```
 
 Start the gateway:
