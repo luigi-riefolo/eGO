@@ -1,0 +1,20 @@
+# Beta service TOML definition.
+
+[beta]
+
+name= "Beta service"
+short_name = "beta"
+
+[beta.owner]
+name = "Luigi Riefolo"
+date_created = "2017-08-27T10:30:00+01:00"
+
+[beta.server]
+host = "localhost"
+port = 10102
+clients = [ "omega" ]
+
+[beta.database]
+server = "localhost"
+ports = [ 8001, 8001, 8002 ]
+connection_max = 5000

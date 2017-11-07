@@ -1,0 +1,72 @@
+{
+   "Beta" : {
+      "ShortName" : "beta",
+      "Name" : "Beta service",
+      "Server" : {
+         "Host" : "localhost",
+         "Port" : 10102,
+         "Clients" : [
+            "omega"
+         ],
+         "Address" : ""
+      },
+      "Database" : {
+         "ConnMax" : 5000,
+         "Server" : "localhost",
+         "Ports" : [
+            8001,
+            8001,
+            8002
+         ]
+      }
+   },
+   "Alfa" : {
+      "Database" : {
+         "ConnMax" : 5000,
+         "Server" : "localhost",
+         "Ports" : [
+            8001,
+            8001,
+            8002
+         ]
+      },
+      "Server" : {
+         "GatewayPort" : 10100,
+         "Address" : "",
+         "Services" : [
+            "alfa",
+            "beta"
+         ],
+         "Host" : "localhost",
+         "IsGateway" : true,
+         "Port" : 10101
+      },
+      "ShortName" : "alfa",
+      "Name" : "Alfa service"
+   },
+   "Omega" : {
+      "Name" : "Omega service",
+      "ShortName" : "omega",
+      "Database" : {
+         "ConnMax" : 5000,
+         "Server" : "localhost",
+         "Ports" : [
+            8001,
+            8001,
+            8002
+         ]
+      },
+      "Server" : {
+         "Services" : [
+            "omega"
+         ],
+         "Address" : "",
+         "Clients" : [
+            "beta"
+         ],
+         "Port" : 10103,
+         "Host" : "localhost"
+      }
+   },
+   "ConfigFile" : "/Users/luigi/Workspace/Go/work/src/github.com/luigi-riefolo/alfa/conf/global_conf.toml"
+}

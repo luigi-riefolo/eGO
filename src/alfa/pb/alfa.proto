@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+// Alfa Service
+//
+// Alfa Service API consists of a single service which returns a message.
+package alfa;
+
+option go_package = "alfa";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "github.com/luigi-riefolo/alfa/src/beta/pb/beta.proto";
+
+
+// Message represents a simple message sent to the Alfa service.
+message Message {
+	// Id represents the message identifier.
+	string id = 1;
+	// The message to be sent.
+	string msg = 2;
+}
+
+// Alfa service is system gateway.
+service AlfaService {
+	// Get method receives a simple message and returns it.
+	// The message posted as the id parameter will also be returned.
+	rpc Get(google.protobuf.Empty) returns (Message) {
+		option (google.api.http) = {
+            get: "/v1/alfa/get"
+		};
+	}
+    // Alfa method sets a simple message.
+    rpc Set(Message) returns (google.protobuf.Empty) {
+		option (google.api.http) = {
+			post: "/v1/alfa/set"
+            body: "*"
+		};
+	}
+
+	rpc Test(google.protobuf.Empty) returns (beta.Message) {
+		option (google.api.http) = {
+			//get: "/v1/beta/{id}/{msg}"
+			get: "/v1/beta/test"
+		};
+	}
+}
+
+/*
+POC: multiple services handled by single gRPC server
+
+service GammaService {
+    rpc TestOp(google.protobuf.Empty) returns (beta.Message) {
+		option (google.api.http) = {
+			get: "/v1/beta/test"
+		};
+	}
+}
+*/

@@ -1,0 +1,115 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Alfa Service",
+    "description": "Alfa Service API consists of a single service which returns a message.",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/alfa/get": {
+      "get": {
+        "summary": "Get method receives a simple message and returns it.\nThe message posted as the id parameter will also be returned.",
+        "operationId": "Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/alfaMessage"
+            }
+          }
+        },
+        "tags": [
+          "AlfaService"
+        ]
+      }
+    },
+    "/v1/alfa/set": {
+      "post": {
+        "summary": "Alfa method sets a simple message.",
+        "operationId": "Set",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/protobufEmpty"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/alfaMessage"
+            }
+          }
+        ],
+        "tags": [
+          "AlfaService"
+        ]
+      }
+    },
+    "/v1/beta/test": {
+      "get": {
+        "operationId": "Test",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/betaMessage"
+            }
+          }
+        },
+        "tags": [
+          "AlfaService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "alfaMessage": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Id represents the message identifier."
+        },
+        "msg": {
+          "type": "string",
+          "description": "The message to be sent."
+        }
+      },
+      "description": "Message represents a simple message sent to the Alfa service."
+    },
+    "betaMessage": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Id represents the message identifier."
+        },
+        "msg": {
+          "type": "string",
+          "description": "The message to be sent."
+        }
+      },
+      "description": "Message represents a simple message sent to the Beta service."
+    },
+    "protobufEmpty": {
+      "type": "object",
+      "description": "service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
+      "title": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:"
+    }
+  }
+}

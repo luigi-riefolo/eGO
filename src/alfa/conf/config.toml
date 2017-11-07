@@ -1,0 +1,22 @@
+# Gateway TOML definition.
+
+[alfa]
+
+name = "Alfa service"
+short_name = "alfa"
+
+[alfa.owner]
+name = "Luigi Riefolo"
+date_created = "2017-08-27T10:30:00+01:00"
+
+[alfa.server]
+host = "localhost"
+port = 10101
+is_gateway = true
+gateway_port = 10100
+services = [ "alfa", "beta" ]
+
+[alfa.database]
+server = "localhost"
+ports = [ 8001, 8001, 8002 ]
+connection_max = 5000

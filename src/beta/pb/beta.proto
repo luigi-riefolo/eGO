@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+// Beta Service
+//
+// Beta Service API consists of a single service which returns a message.
+package beta;
+
+option go_package = "beta";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+
+// Message represents a simple message sent to the Beta service.
+message Message {
+	// Id represents the message identifier.
+	string id = 1;
+	// The message to be sent.
+	string msg = 2;
+}
+
+// Beta service responds to incoming alfa requests.
+service BetaService {
+	rpc Test(google.protobuf.Empty) returns (Message) {}
+}

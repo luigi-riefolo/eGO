@@ -1,0 +1,34 @@
+syntax = "proto3";
+option go_package = "omega";
+
+// Omega Service
+//
+// Omega Service.
+package omega;
+
+import "google/api/annotations.proto";
+
+// Message represents a simple message sent to the Echo service.
+message Message {
+    // Id represents the message identifier.
+    string id = 1;
+    // The message to be sent.
+    string msg = 2;
+}
+
+message DumpReq {
+}
+
+message DumpItem {
+    string key = 1;
+    string val = 2;
+}
+
+// Omega service responds to incoming echo requests.
+service OmegaService {
+    // Echo method receives a simple message and returns it.
+    // The message posted as the id parameter will also be returned.
+    rpc Echo(Message) returns (Message) {}
+
+//    rpc Dump(DumpReq) returns (stream DumpItem) {}
+}

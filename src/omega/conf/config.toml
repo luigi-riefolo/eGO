@@ -1,0 +1,21 @@
+# Omega service TOML definition.
+
+[omega]
+
+name = "Omega service"
+short_name = "omega"
+
+[omega.owner]
+name = "Luigi Riefolo"
+date_created = "2017-08-27T10:30:00+01:00"
+
+[omega.server]
+host = "localhost"
+port = 10103
+clients = [ "beta" ]
+services = [ "omega" ]
+
+[omega.database]
+server = "localhost"
+ports = [ 8001, 8001, 8002 ]
+connection_max = 5000
