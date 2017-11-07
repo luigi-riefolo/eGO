@@ -8,7 +8,7 @@ and Kubernetes.
 
 Users have to only define their proto definitions and implement the respective
 functions, all the rest (configuration, middlewares/interceptors, etc.) is
-provide by eGO.
+provided by eGO.
 
 _Note:_ this project is still experimental and not ready for production.
 
