@@ -3,7 +3,7 @@ package client
 import (
 	"google.golang.org/grpc"
 
-	pb "github.com/luigi-riefolo/alfa/src/beta/pb"
+	pb "github.com/luigi-riefolo/eGO/src/beta/pb"
 )
 
 // New creates a Beta client.

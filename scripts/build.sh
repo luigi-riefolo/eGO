@@ -8,7 +8,7 @@ set -xe
 SERVICE_NAME=
 
 
-PROJECT="github.com/luigi-riefolo/alfa"
+PROJECT="github.com/luigi-riefolo/eGO"
 BASE=${GOPATH}/src/$PROJECT
 SERVICE_DIR="${PROJECT}/src"
 CONF_PATH=conf/global_conf.toml

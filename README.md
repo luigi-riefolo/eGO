@@ -32,7 +32,7 @@ Create a private local registry:
 Generate the gRPC configuration for a service:
 
 ```
-./tools/grpc-generator/generate.sh --service omega --project "github.com/luigi-riefolo/alfa"
+./tools/grpc-generator/generate.sh --service omega --project "github.com/luigi-riefolo/eGO"
 ```
 
 Build a service:

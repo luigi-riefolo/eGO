@@ -6,7 +6,7 @@ import (
 	"log"
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-	"github.com/luigi-riefolo/alfa/pkg/config"
+	"github.com/luigi-riefolo/eGO/pkg/config"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 )

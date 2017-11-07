@@ -8,11 +8,11 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 
-	"github.com/luigi-riefolo/alfa/pkg/client"
-	"github.com/luigi-riefolo/alfa/pkg/config"
-	"github.com/luigi-riefolo/alfa/pkg/server"
-	pb "github.com/luigi-riefolo/alfa/src/alfa/pb"
-	betapb "github.com/luigi-riefolo/alfa/src/beta/pb"
+	"github.com/luigi-riefolo/eGO/pkg/client"
+	"github.com/luigi-riefolo/eGO/pkg/config"
+	"github.com/luigi-riefolo/eGO/pkg/server"
+	pb "github.com/luigi-riefolo/eGO/src/alfa/pb"
+	betapb "github.com/luigi-riefolo/eGO/src/beta/pb"
 )
 
 // Service represents the Alfa service.

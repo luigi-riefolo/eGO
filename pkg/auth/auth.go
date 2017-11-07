@@ -3,7 +3,7 @@ package auth
 import (
 	"context"
 
-	"github.com/luigi-riefolo/alfa/pkg/http"
+	"github.com/luigi-riefolo/eGO/pkg/http"
 )
 
 // Token gets the auth token from the context.

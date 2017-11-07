@@ -16,7 +16,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
 
-	"github.com/luigi-riefolo/alfa/pkg/config"
+	"github.com/luigi-riefolo/eGO/pkg/config"
 )
 
 // Server ...
@@ -73,15 +73,18 @@ func NewServer(port int) *Server {
 }
 
 // Listen starts listening on a port.
-func (srv *Server) Listen() error {
+func (srv *Server) Listen() {
 
 	srv.setServicesHealth()
 
-	if err := srv.gRPC.Serve(srv.lis); err != nil {
-		return fmt.Errorf("Cannot listen and serve: %v", err)
-	}
+	// initialize Prometheus metrics
+	//srv.StartPrometheus()
 
-	return nil
+	go func() {
+		if err := srv.gRPC.Serve(srv.lis); err != nil {
+			log.Printf("Cannot listen and serve: %v", err)
+		}
+	}()
 }
 
 // HandleSig ...

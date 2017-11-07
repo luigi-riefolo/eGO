@@ -5,7 +5,7 @@ package main
 import (
 	"log"
 
-	"github.com/luigi-riefolo/alfa/pkg/config"
+	"github.com/luigi-riefolo/eGO/pkg/config"
 )
 
 func main() {

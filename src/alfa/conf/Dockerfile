@@ -22,8 +22,8 @@ ARG PROJECT
 ##USER 751
 ##ADD /Users/luigi/Workspace/alfa/src/alfa/cmd/alfa /
 
-##ADD . /go/src/github.com/luigi-riefolo/alfa/alfa
-##RUN go install github.com/luigi-riefolo/alfa/alfa/cmd
+##ADD . /go/src/github.com/luigi-riefolo/eGO/alfa
+##RUN go install github.com/luigi-riefolo/eGO/alfa/cmd
 ##ENTRYPOINT ["/go/bin/alfa"]
 
 ADD $CONFIG_FILE /

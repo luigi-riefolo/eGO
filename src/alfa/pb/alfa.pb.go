@@ -21,7 +21,7 @@ import fmt "fmt"
 import math "math"
 import _ "google.golang.org/genproto/googleapis/api/annotations"
 import google_protobuf1 "github.com/golang/protobuf/ptypes/empty"
-import beta "github.com/luigi-riefolo/alfa/src/beta/pb"
+import beta "github.com/luigi-riefolo/eGO/src/beta/pb"
 
 import (
 	context "golang.org/x/net/context"

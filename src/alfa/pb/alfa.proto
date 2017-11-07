@@ -9,7 +9,7 @@ option go_package = "alfa";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
-import "github.com/luigi-riefolo/alfa/src/beta/pb/beta.proto";
+import "github.com/luigi-riefolo/eGO/src/beta/pb/beta.proto";
 
 
 // Message represents a simple message sent to the Alfa service.

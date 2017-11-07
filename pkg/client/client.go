@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/luigi-riefolo/alfa/pkg/config"
-	betaclient "github.com/luigi-riefolo/alfa/src/beta/client"
-	omegaclient "github.com/luigi-riefolo/alfa/src/omega/client"
+	"github.com/luigi-riefolo/eGO/pkg/config"
+	betaclient "github.com/luigi-riefolo/eGO/src/beta/client"
+	omegaclient "github.com/luigi-riefolo/eGO/src/omega/client"
 	"google.golang.org/grpc"
 )
 

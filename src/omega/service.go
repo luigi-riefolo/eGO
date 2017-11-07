@@ -5,8 +5,8 @@ import (
 
 	"golang.org/x/net/context"
 
-	"github.com/luigi-riefolo/alfa/pkg/config"
-	pb "github.com/luigi-riefolo/alfa/src/omega/pb"
+	"github.com/luigi-riefolo/eGO/pkg/config"
+	pb "github.com/luigi-riefolo/eGO/src/omega/pb"
 )
 
 // Service implements an OmegaServiceServer.

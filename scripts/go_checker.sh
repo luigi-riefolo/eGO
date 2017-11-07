@@ -11,7 +11,7 @@ set -xe
 
 CHECK_FOLDERS="./... ."
 PREV_DIR="$(pwd)"
-PROJECT_DIR=${GOPATH}/src/github.com/luigi-riefolo/alfa
+PROJECT_DIR=${GOPATH}/src/github.com/luigi-riefolo/eGO
 
 
 cd $PROJECT_DIR

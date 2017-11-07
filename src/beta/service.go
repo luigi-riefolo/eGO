@@ -7,11 +7,11 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
-	"github.com/luigi-riefolo/alfa/pkg/client"
-	"github.com/luigi-riefolo/alfa/pkg/config"
-	"github.com/luigi-riefolo/alfa/pkg/server"
-	pb "github.com/luigi-riefolo/alfa/src/beta/pb"
-	omegapb "github.com/luigi-riefolo/alfa/src/omega/pb"
+	"github.com/luigi-riefolo/eGO/pkg/client"
+	"github.com/luigi-riefolo/eGO/pkg/config"
+	"github.com/luigi-riefolo/eGO/pkg/server"
+	pb "github.com/luigi-riefolo/eGO/src/beta/pb"
+	omegapb "github.com/luigi-riefolo/eGO/src/omega/pb"
 )
 
 // Service implements a BetaServiceServer

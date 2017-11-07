@@ -4,11 +4,11 @@ import (
 	"log"
 
 	// Project packages
-	omega "github.com/luigi-riefolo/alfa/src/omega"
-	pb "github.com/luigi-riefolo/alfa/src/omega/pb"
+	omega "github.com/luigi-riefolo/eGO/src/omega"
+	pb "github.com/luigi-riefolo/eGO/src/omega/pb"
 
-	"github.com/luigi-riefolo/alfa/pkg/config"
-	"github.com/luigi-riefolo/alfa/pkg/server"
+	"github.com/luigi-riefolo/eGO/pkg/config"
+	"github.com/luigi-riefolo/eGO/pkg/server"
 )
 
 var (

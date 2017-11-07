@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"github.com/BurntSushi/toml"
-	str "github.com/luigi-riefolo/alfa/l10n/en_EN"
+	str "github.com/luigi-riefolo/eGO/l10n/en_EN"
 )
 
 // TODO:

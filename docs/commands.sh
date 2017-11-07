@@ -167,7 +167,7 @@ docker-compose -f docker-compose.am-test.yml up am-test-amapi nginx
 
 
 # Swagger
-docker run -p 80:8080 -e SWAGGER_JSON=/data/alfa.swagger.json -v $GOPATH/src/github.com/luigi-riefolo/alfa/src/alfa/pb/definitions:/data swaggerapi/swagger-ui
+docker run -p 80:8080 -e SWAGGER_JSON=/data/alfa.swagger.json -v $GOPATH/src/github.com/luigi-riefolo/eGO/src/alfa/pb/definitions:/data swaggerapi/swagger-ui
 
 
 

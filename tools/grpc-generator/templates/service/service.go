@@ -4,8 +4,8 @@ import (
 	"log"
 
 	// Project packages
-	"github.com/luigi-riefolo/alfa/pkg/config"
-	"github.com/luigi-riefolo/alfa/pkg/server"
+	"github.com/luigi-riefolo/eGO/pkg/config"
+	"github.com/luigi-riefolo/eGO/pkg/server"
 )
 
 var (
@@ -34,5 +34,5 @@ func main() {
 
 	// register the gRPC service server
 
-	srv.Listen()
+	log.Fatal(srv.Listen())
 }
