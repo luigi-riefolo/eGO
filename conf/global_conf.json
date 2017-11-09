@@ -1,7 +1,5 @@
 {
    "Alfa" : {
-      "ShortName" : "alfa",
-      "Name" : "Alfa service",
       "Database" : {
          "Server" : "localhost",
          "Ports" : [
@@ -12,15 +10,41 @@
          "ConnMax" : 5000
       },
       "Server" : {
-         "Port" : 10101,
-         "GatewayPort" : 10100,
-         "Services" : [
+         "MicroServices" : [
             "alfa",
             "beta"
          ],
+         "IsGateway" : true,
          "Host" : "localhost",
          "Address" : "",
-         "IsGateway" : true
+         "GatewayPort" : 10100,
+         "Port" : 10101
+      },
+      "ShortName" : "alfa",
+      "Name" : "Alfa service"
+   },
+   "Omega" : {
+      "Server" : {
+         "Port" : 10103,
+         "Clients" : [
+            "beta"
+         ],
+         "Host" : "localhost",
+         "MicroServices" : [
+            "omega"
+         ],
+         "Address" : ""
+      },
+      "ShortName" : "omega",
+      "Name" : "Omega service",
+      "Database" : {
+         "Server" : "localhost",
+         "ConnMax" : 5000,
+         "Ports" : [
+            8001,
+            8001,
+            8002
+         ]
       }
    },
    "Beta" : {
@@ -32,41 +56,17 @@
          "Host" : "localhost",
          "Address" : ""
       },
-      "Database" : {
-         "ConnMax" : 5000,
-         "Server" : "localhost",
-         "Ports" : [
-            8001,
-            8001,
-            8002
-         ]
-      },
       "ShortName" : "beta",
-      "Name" : "Beta service"
-   },
-   "ConfigFile" : "/Users/luigi/Workspace/Go/work/src/github.com/luigi-riefolo/eGO/conf/global_conf.toml",
-   "Omega" : {
-      "ShortName" : "omega",
-      "Name" : "Omega service",
-      "Server" : {
-         "Clients" : [
-            "beta"
-         ],
-         "Port" : 10103,
-         "Services" : [
-            "omega"
-         ],
-         "Address" : "",
-         "Host" : "localhost"
-      },
+      "Name" : "Beta service",
       "Database" : {
          "ConnMax" : 5000,
-         "Server" : "localhost",
          "Ports" : [
             8001,
             8001,
             8002
-         ]
+         ],
+         "Server" : "localhost"
       }
-   }
+   },
+   "ConfigFile" : "/Users/luigi/Workspace/Go/work/src/github.com/luigi-riefolo/eGO/conf/global_conf.toml"
 }

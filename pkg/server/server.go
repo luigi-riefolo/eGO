@@ -5,9 +5,6 @@ import (
 	"fmt"
 	"log"
 	"net"
-	"os"
-	"os/signal"
-	"syscall"
 	"time"
 
 	"github.com/grpc-ecosystem/go-grpc-middleware"
@@ -21,6 +18,7 @@ import (
 
 // Server ...
 type Server struct {
+	name              string
 	gRPC              *grpc.Server
 	lis               net.Listener
 	health            *health.Server
@@ -33,9 +31,9 @@ func (srv *Server) GetgRPCServer() *grpc.Server {
 }
 
 // NewServer creates a new gRPC server.
-func NewServer(port int) *Server {
+func NewServer(conf config.Service) *Server {
 
-	l, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
+	l, err := net.Listen("tcp", fmt.Sprintf(":%d", conf.Server.Port))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -62,12 +60,11 @@ func NewServer(port int) *Server {
 	}
 
 	srv := &Server{
+		name:   conf.Name,
 		gRPC:   grpc.NewServer(opts...),
 		lis:    l,
 		health: health.NewServer(),
 	}
-
-	srv.HandleSig()
 
 	return srv
 }
@@ -75,7 +72,7 @@ func NewServer(port int) *Server {
 // Listen starts listening on a port.
 func (srv *Server) Listen() {
 
-	srv.setServicesHealth()
+	//srv.setServicesHealth()
 
 	// initialize Prometheus metrics
 	//srv.StartPrometheus()
@@ -85,44 +82,18 @@ func (srv *Server) Listen() {
 			log.Printf("Cannot listen and serve: %v", err)
 		}
 	}()
+
+	log.Printf("Service %s listening on: %s", srv.name, srv.lis.Addr().String())
 }
 
 // HandleSig ...
-func (srv *Server) HandleSig() {
+func (srv *Server) HandleSig(sig string) {
 
-	sig := make(chan os.Signal, 1)
-	signal.Notify(sig,
-		syscall.SIGINT,
-		syscall.SIGTERM,
-		syscall.SIGQUIT)
-
-	done := make(chan int)
-	go func() {
-		for {
-			s := <-sig
-			switch s {
-
-			case syscall.SIGINT:
-				log.Println("Handling interrupt signal")
-				srv.gRPC.GracefulStop()
-				done <- 0
-
-			case syscall.SIGTERM:
-				log.Println("Handling termination signal")
-				srv.gRPC.GracefulStop()
-				done <- 0
-
-			case syscall.SIGQUIT:
-				log.Println("Handling quit signal")
-				srv.gRPC.GracefulStop()
-				done <- 0
-
-			default:
-				log.Println("Unknown signal")
-				done <- 1
-			}
-		}
-	}()
+	log.Printf("Handling %s signal in %s\n", sig, srv.name)
+	for s := range srv.GetgRPCServer().GetServiceInfo() {
+		log.Printf("Shutting down %s\n", s)
+	}
+	srv.gRPC.Stop()
 }
 
 // ContextTimeout ...

@@ -21,13 +21,13 @@ type Service struct {
 
 // Server represents a server configuration struct.
 type Server struct {
-	Host        string
-	Port        int
-	Address     string
-	Clients     []string `json:",omitempty"`
-	Services    []string `json:",omitempty"`
-	IsGateway   bool     `toml:"is_gateway" json:",omitempty"`
-	GatewayPort int      `toml:"gateway_port" json:",omitempty"`
+	Host          string
+	Port          int
+	Address       string
+	Clients       []string `json:",omitempty"`
+	MicroServices []string `toml:"micro_services" json:",omitempty"`
+	IsGateway     bool     `toml:"is_gateway" json:",omitempty"`
+	GatewayPort   int      `toml:"gateway_port" json:",omitempty"`
 }
 
 // Database represents a database struct.

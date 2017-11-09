@@ -14,13 +14,17 @@ import (
 func newConn(ctx context.Context, conf config.Service, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
 	target := fmt.Sprintf("%s:%d", conf.Server.Host, conf.Server.Port)
 
-	log.Printf("%s: %s", conf.Name, target)
-
 	// Set up a connection to the server.
 	conn, err := grpc.DialContext(ctx, target, opts...)
 	if err != nil {
 		return nil, err
 	}
+
+	// TODO: close client connections on interrupts
+	//conn.Close()
+
+	log.Printf("Client for %s connected on: %s", conf.Name, target)
+
 	return conn, nil
 }
 

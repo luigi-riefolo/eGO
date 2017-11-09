@@ -37,15 +37,17 @@ func NewService(ctx context.Context, conf config.Config) pb.BetaServiceServer {
 }
 
 // Serve starts listening and serving requests.
-func Serve(ctx context.Context, serviceConf config.Config) {
+func Serve(ctx context.Context, serviceConf config.Config) *server.Server {
 
-	srv := server.NewServer(serviceConf.Beta.Server.Port)
+	srv := server.NewServer(serviceConf.Beta)
 
 	betaServer := NewService(ctx, serviceConf)
 
 	pb.RegisterBetaServiceServer(srv.GetgRPCServer(), betaServer)
 
 	srv.Listen()
+
+	return srv
 }
 
 // Test ...

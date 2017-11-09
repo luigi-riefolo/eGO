@@ -212,14 +212,14 @@ function add_services {
     [[ $IS_GATEWAY != "true" ]] && {
         sed -i "s#\(get service configuration\)#\1\nservice = conf.${SERVICE_NAME^}#" $SERVER_FILE
 
-        FN="pb.Register${SERVICE_NAME^}ServiceServer(srv, ${SERVICE_NAME}.NewService(conf))"
+        FN="pb.Register${SERVICE_NAME^}ServiceServer(srv.GetgRPCServer(), ${SERVICE_NAME}.NewService(conf))"
         sed -i "s#\(register the gRPC service server\)#\1\n$FN#" $SERVER_FILE
 
         IMPORT_PATH="${PROJECT}/src/${SERVICE_NAME}"
         IMPORTS+=("pb \"${IMPORT_PATH}/pb"\")
     }
 
-    DATA="$(jq -r '.Server.Services[]?' <<<"${CONFIG_MAP[$SERVICE_NAME]}")"
+    DATA="$(jq -r '.Server.MicroServices[]?' <<<"${CONFIG_MAP[$SERVICE_NAME]}")"
 
     [[ "$DATA" != "" ]] && {
 
@@ -247,7 +247,7 @@ function add_services {
             [[ $(is_gateway $SERVICE) == "true" ]] && {
                 ENDPOINTS+=("gw.LoadEndpoint(ctx, ${PARAMETERS})")
             }
-            SERVICES+=("${SERVICE}.Serve(ctx, conf)")
+            SERVICES+=("conf.${SERVICE^}.Name:  ${SERVICE}.Serve(ctx, conf),")
 
         done <<<"$DATA"
 
@@ -279,6 +279,7 @@ function configure_grpc_server {
 
     add_services
 
+    goimports -w $SERVER_FILE
 }
 
 
@@ -291,6 +292,5 @@ configure_grpc_server
     generate_swagger_definitions
 }
 
-goimports -w $SERVER_FILE
 
 echo "Done"

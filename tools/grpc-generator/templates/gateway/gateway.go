@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/http"
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"golang.org/x/net/context"
@@ -34,8 +33,6 @@ func init() {
 	if err != nil {
 		log.Fatal("Config file could not be parsed")
 	}
-
-	log.Printf("Starting %s", conf.Alfa.Name)
 }
 
 // runEndPoints ...
@@ -70,13 +67,11 @@ func runEndPoints() error {
 
 	// List of gateway endpoints
 
+	gw.Services = map[string]*server.Server{
 	// List of services
+	}
 
-	log.Printf("Gateway listening on %s\n", gw.ListenAddr)
-
-	log.Fatal(http.ListenAndServe(gw.ListenAddr, gw.Mux))
-
-	return nil
+	return gw.ListenAndServe()
 }
 
 func main() {

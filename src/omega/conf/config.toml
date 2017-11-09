@@ -13,7 +13,7 @@ date_created = "2017-08-27T10:30:00+01:00"
 host = "localhost"
 port = 10103
 clients = [ "beta" ]
-services = [ "omega" ]
+micro_services = [ "omega" ]
 
 [omega.database]
 server = "localhost"

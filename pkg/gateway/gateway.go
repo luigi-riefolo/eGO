@@ -4,9 +4,14 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/luigi-riefolo/eGO/pkg/config"
+	"github.com/luigi-riefolo/eGO/pkg/server"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 )
@@ -28,14 +33,13 @@ type Gateway struct {
 	//mux        *http.ServeMux
 	ListenAddr string
 	Mux        *runtime.ServeMux
+	Services   map[string]*server.Server
 }
 
 // LoadEndpoint ...
 func (gw *Gateway) LoadEndpoint(ctx context.Context, serviceConf config.Service, regFn registerFromEndpoint) {
 
-	//addr := fmt.Sprintf("%s:%d", serviceConf.Server.Host, serviceConf.Server.Port)
 	addr := fmt.Sprintf(":%d", serviceConf.Server.Port)
-	log.Printf("%s %s", serviceConf.Name, addr)
 
 	if err := regFn(ctx, gw.Mux, addr, gw.DialOpts); err != nil {
 		log.Fatalf("failed to register endpoint: %v", err)
@@ -49,3 +53,63 @@ func (gw *gateway) initStaticContentHandlers() {
 	gw.mux.Handle("/help/", http.StripPrefix("/help/", swaggerHandler))
 }
 */
+
+// ListenAndServe ...
+func (gw *Gateway) ListenAndServe() error {
+
+	gw.HandleSig()
+
+	log.Printf("Gateway listening on %s\n", gw.ListenAddr)
+
+	return http.ListenAndServe(gw.ListenAddr, gw.Mux)
+}
+
+// HandleSig ...
+func (gw *Gateway) HandleSig() {
+
+	sig := make(chan os.Signal, 1)
+	signal.Notify(sig,
+		syscall.SIGINT,
+		syscall.SIGTERM,
+		syscall.SIGQUIT)
+
+	stopServices := func(sigStr string) {
+		for _, srv := range gw.Services {
+			for s := range srv.GetgRPCServer().GetServiceInfo() {
+				log.Printf("Shutting down %s\n", s)
+			}
+			srv.GetgRPCServer().Stop()
+		}
+	}
+	done := make(chan struct{})
+	go func() {
+		for {
+			s := <-sig
+			log.Printf("Handling %s signal\n", s.String())
+
+			switch s {
+
+			case syscall.SIGINT:
+				stopServices(s.String())
+				done <- struct{}{}
+
+			case syscall.SIGTERM:
+				stopServices(s.String())
+				done <- struct{}{}
+
+			case syscall.SIGQUIT:
+				stopServices(s.String())
+				done <- struct{}{}
+
+			default:
+				log.Printf("Received unknown signal: %s\n", s.String())
+			}
+		}
+	}()
+
+	go func() {
+		<-done
+		log.Println("Shutting down gateway")
+		os.Exit(1)
+	}()
+}

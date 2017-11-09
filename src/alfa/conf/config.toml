@@ -14,7 +14,7 @@ host = "localhost"
 port = 10101
 is_gateway = true
 gateway_port = 10100
-services = [ "alfa", "beta" ]
+micro_services = [ "alfa", "beta" ]
 
 [alfa.database]
 server = "localhost"

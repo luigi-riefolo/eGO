@@ -60,9 +60,9 @@ func NewGammaService() pb.GammaServiceServer {
 */
 
 // Serve starts listening and serving requests.
-func Serve(ctx context.Context, conf config.Config) {
+func Serve(ctx context.Context, conf config.Config) *server.Server {
 
-	srv := server.NewServer(conf.Alfa.Server.Port)
+	srv := server.NewServer(conf.Alfa)
 
 	alfaService := NewAlfaService(ctx, conf)
 
@@ -71,6 +71,8 @@ func Serve(ctx context.Context, conf config.Config) {
 	//pb.RegisterGammaServiceServer(srv.GetgRPCServer(), NewGammaService())
 
 	srv.Listen()
+
+	return srv
 }
 
 // Get ...

@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"sync"
 
 	// Project packages
 	omega "github.com/luigi-riefolo/eGO/src/omega"
@@ -31,13 +32,16 @@ func init() {
 
 func main() {
 
-	srv := server.NewServer(service.Server.Port)
-
-	log.Printf("Starting the %s service: %s:%d",
-		service.Name, service.Server.Host, service.Server.Port)
+	srv := server.NewServer(service)
 
 	// register the gRPC service server
 	pb.RegisterOmegaServiceServer(srv.GetgRPCServer(), omega.NewService(conf))
 
+	var wg sync.WaitGroup
 	srv.Listen()
+
+	wg.Add(1)
+
+	// wait until the server shuts down
+	wg.Wait()
 }
