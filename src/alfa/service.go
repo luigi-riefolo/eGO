@@ -27,10 +27,7 @@ func NewAlfaService(ctx context.Context, conf config.Config) pb.AlfaServiceServe
 		conf: conf,
 	}
 
-	// TODO: REMOVE ME
-	opts := []grpc.DialOption{}
-
-	c, err := client.Get(ctx, conf.Beta, opts...)
+	c, err := client.Get(ctx, conf.Beta)
 	if err != nil {
 		log.Fatalf("%v", err)
 	}

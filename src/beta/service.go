@@ -5,7 +5,6 @@ import (
 
 	"github.com/golang/protobuf/ptypes/empty"
 	"golang.org/x/net/context"
-	"google.golang.org/grpc"
 
 	"github.com/luigi-riefolo/eGO/pkg/client"
 	"github.com/luigi-riefolo/eGO/pkg/config"
@@ -26,8 +25,7 @@ func NewService(ctx context.Context, conf config.Config) pb.BetaServiceServer {
 		conf: conf,
 	}
 
-	opts := []grpc.DialOption{}
-	c, err := client.Get(ctx, conf.Omega, opts...)
+	c, err := client.Get(ctx, conf.Omega)
 	if err != nil {
 		log.Fatalf("%v", err)
 	}

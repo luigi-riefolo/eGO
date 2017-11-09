@@ -36,6 +36,11 @@ ME_DIR=$(dirname $(readlink -f $0))
 # use the go config parser for the service vars
 # go-bindata -o data/bindata.go -pkg data data/*.json
 
+# use these flags:
+#VERSION?=?
+#COMMIT=$(shell git rev-parse HEAD)
+#BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
+#LDFLAGS = -ldflags "-X main.VERSION=${VERSION} -X main.COMMIT=${COMMIT} -X main.BRANCH=${BRANCH}"
 
 
 function usage {

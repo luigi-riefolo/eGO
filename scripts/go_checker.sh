@@ -2,38 +2,29 @@
 
 # Script for Go code error checking.
 
-
-# TODO: check if with many/big files
-# is faster to run in background or parallelise the jobs
-
 set -xe
 
+DIR="./..."
+FOLDERS="pkg src"
+SUB_FOLDERS="pkg/... src/..."
 
-CHECK_FOLDERS="./... ."
 PREV_DIR="$(pwd)"
 PROJECT_DIR=${GOPATH}/src/github.com/luigi-riefolo/eGO
 
-
 cd $PROJECT_DIR
 
-#gofmt -w
+goimports -w $FOLDERS
 
-errcheck $CHECK_FOLDERS
-structcheck $CHECK_FOLDERS
-varcheck $CHECK_FOLDERS
-staticcheck $CHECK_FOLDERS
-goconst -ignore vendor $CHECK_FOLDERS
+errcheck $DIR
+structcheck $DIR
+varcheck $DIR
+staticcheck $DIR
+goconst -ignore vendor $FOLDERS
 
-go vet ./...
-gosimple $CHECK_FOLDERS
-goimports -d $(find . -type f -name '*.go')
-golint -set_exit_status ./...
-govendor service +local
-
-#tomlv some-toml-file.toml
-
-#	go-bindata -o data/bindata.go -pkg data data/*.json
-#go fmt $$(go list ./... | grep -v /vendor/) ;
-
+go vet $DIR
+gosimple $DIR
+golint -set_exit_status $SUB_FOLDERS
 
 cd $PREV_DIR
+
+echo "Go checker completed"

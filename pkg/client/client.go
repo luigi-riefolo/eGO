@@ -11,6 +11,15 @@ import (
 	"google.golang.org/grpc"
 )
 
+var (
+	// DefaultDialOpts is a list of default DialOptions.
+	DefaultDialOpts = []grpc.DialOption{
+		grpc.WithInsecure(),
+		grpc.WithCompressor(grpc.NewGZIPCompressor()),
+		grpc.WithDecompressor(grpc.NewGZIPDecompressor()),
+	}
+)
+
 func newConn(ctx context.Context, conf config.Service, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
 	target := fmt.Sprintf("%s:%d", conf.Server.Host, conf.Server.Port)
 
@@ -33,11 +42,8 @@ func Get(ctx context.Context, conf config.Service, opts ...grpc.DialOption) (int
 
 	var client interface{}
 
-	// TODO: remove once using credentials
-	opts = []grpc.DialOption{
-		grpc.WithInsecure(),
-		grpc.WithCompressor(grpc.NewGZIPCompressor()),
-		grpc.WithDecompressor(grpc.NewGZIPDecompressor()),
+	if len(opts) == 0 {
+		opts = DefaultDialOpts
 	}
 
 	conn, err := newConn(ctx, conf, opts...)

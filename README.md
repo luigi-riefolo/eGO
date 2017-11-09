@@ -54,6 +54,7 @@ Thanks to all the Open Source projects that inspired eGO:
 * [gRPC][1]
 * [grpc-gateway-generator][3]
 * [go-micro-services][4]
+* [Golang Project Makefile Template][5]
 
 More to be mentioned.
 
@@ -61,3 +62,4 @@ More to be mentioned.
 [2]: http://www.github.com/luigi.riefolo/alfa/contributors
 [3]: https://github.com/devsu/grpc-gateway-generator
 [4]: https://github.com/harlow/go-micro-services
+[5]: https://gist.github.com/turtlemonvh/38bd3d73e61769767c35931d8c70ccb4

@@ -189,6 +189,4 @@ func (conf *Config) processArgs() {
 		arg := strings.Split(op, "=")
 		cmdArgMap[arg[0]] = arg[1]
 	}
-
-	return
 }
