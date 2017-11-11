@@ -41,7 +41,12 @@ Build a service:
 ./scripts/build.sh -s alfa
 ```
 
-Start the gateway:
+Test gateway:
+```
+curl $(minikube service alfa --url)/v1/alfa/get
+```
+
+Start the gateway locally:
 
 ```
 go run src/alfa/cmd/main.go service -config conf/global_conf.toml
