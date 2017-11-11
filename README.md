@@ -45,6 +45,11 @@ Start the gateway:
 
 ```
 go run src/alfa/cmd/main.go service -config conf/global_conf.toml
+
+BETA_SERVER_PORT=9090 go run src/alfa/cmd/main.go service -config conf/global_conf.toml
+
+go run src/alfa/cmd/main.go service -config conf/global_conf.toml -opts BETA_SERVER_PORT=9090
+
 ```
 
 ### Credits

@@ -200,33 +200,22 @@ function deploy {
     kubectl describe deployment $SERVICE_NAME
     kubectl create -f $SERVICE_DIR/conf/k8s-service.yaml
 
-#    PATTERN=".${SERVICE_NAME^}.Server.Port"
-#    IS_GATEWAY=$(jq -r ".${SERVICE_NAME^}.Server.IsGateway" <<<"$CONFIG_DATA")
-#    if [[ $IS_GATEWAY == "true" ]]
-#    then
-#        PATTERN=".${SERVICE_NAME^}.Server.GatewayPort"
-#    fi
-#
-#    PORT=$(jq -r $PATTERN <<<"$CONFIG_DATA")
-#    #kubectl get pods --all-namespaces -l service-name --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}'
-#
     minikube service $SERVICE_NAME --url
 }
 
 function go_code {
 
-	${ME_DIR}/go_checker.sh ${SERVICE_DIR}
+	${ME_DIR}/go_checker.sh
 
-    go test -coverprofile cover.outs ${SERVICE_DIR}
+    #go test -coverprofile cover.outs ${SERVICE_DIR}
 
     # show in browser
-    go tool cover -html=cover.out -o cover.html
+    #go tool cover -html=cover.out -o cover.html
 }
 
 function tidy_up {
     echo "Tidying up"
 
-    #docker rm "/${SERVICE_NAME}"
     rm -f $CMD_PATH/$SERVICE_NAME
 }
 
@@ -237,7 +226,7 @@ clean_up
 
 load_config
 
-#go_code
+go_code
 
 build_image
 

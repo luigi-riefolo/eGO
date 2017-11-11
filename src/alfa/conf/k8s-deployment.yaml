@@ -17,6 +17,6 @@ spec:
           image: localhost:5000/alfa:v1
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: 10100
       imagePullSecrets:
       - name: secret64

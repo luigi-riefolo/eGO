@@ -1,6 +1,3 @@
-# Credits:
-# https://gist.github.com/turtlemonvh/38bd3d73e61769767c35931d8c70ccb4
-
 # TODO:
 # support multiple services
 
@@ -23,8 +20,5 @@ build:
 test:
 
 clean:
-	#-rm -f ${TEST_REPORT}
-	#-rm -f ${VET_REPORT}
-	#-rm -f ${BINARY}-*
 
 .PHONY: init config check build test clean
