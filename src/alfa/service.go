@@ -69,6 +69,9 @@ func Serve(ctx context.Context, conf config.Config) *server.Server {
 
 	srv.Listen()
 
+	// initialize Prometheus metrics
+	srv.StartPrometheus()
+
 	return srv
 }
 

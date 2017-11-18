@@ -5,9 +5,8 @@ import (
 	"sync"
 
 	// Project packages
-	omega "github.com/luigi-riefolo/eGO/src/omega"
+	"github.com/luigi-riefolo/eGO/src/omega"
 	pb "github.com/luigi-riefolo/eGO/src/omega/pb"
-
 	"github.com/luigi-riefolo/eGO/pkg/config"
 	"github.com/luigi-riefolo/eGO/pkg/server"
 )

@@ -85,7 +85,10 @@ kubectl delete service alfa
 kubectl delete deployment alfa
 
 
-
+kubectl create configmap prometheus-server-conf \
+    --from-file=kube/prometheus/config-v2.yaml \
+    -o yaml \
+    --dry-run | kubectl replace -f -
 
 # check rollout status
 kubectl rollout status deployment/nginx-deployment
@@ -174,8 +177,9 @@ docker run -p 80:8080 -e SWAGGER_JSON=/data/alfa.swagger.json -v $GOPATH/src/git
 
 
 # Prometheus
-sudo docker run -p 9090:9090 prom/prometheus
+docker run -p 9090:9090 prom/prometheus
 
 # provide a config
 docker run -p 9090:9090 -v /tmp/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
+DOCKER_API_VERSION= DOCKER_TLS_VERIFY= DOCKER_CERT_PATH= DOCKER_HOST= docker run -p 9090:9090 prom/prometheus
 

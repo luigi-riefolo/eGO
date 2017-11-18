@@ -21,6 +21,9 @@ PORT=
 ME=$(basename $0)
 ME_DIR=$(dirname $(readlink -f $0))
 
+# TODO: check if running on dev env
+eval $(minikube docker-env)
+
 # TODO
 # rollback mechanism, add a list of steps, for each one a function that gets
 # the value true in the list of steps when it successfully complete within
@@ -220,7 +223,6 @@ function tidy_up {
     rm -f $CMD_PATH/$SERVICE_NAME
 }
 
-eval $(minikube docker-env)
 
 # TODO: use a deployment update instead of removing it
 clean_up

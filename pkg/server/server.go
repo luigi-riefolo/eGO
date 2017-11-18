@@ -7,6 +7,8 @@ import (
 	"net"
 	"time"
 
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	"github.com/grpc-ecosystem/go-grpc-prometheus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
@@ -77,9 +79,6 @@ func (srv *Server) Listen() {
 			log.Printf("Cannot listen and serve: %v", err)
 		}
 	}()
-
-	// initialize Prometheus metrics
-	srv.StartPrometheus()
 
 	log.Printf("Service %s listening on: %s", srv.name, srv.lis.Addr().String())
 }

@@ -5,7 +5,6 @@
 
 set -e
 
-BASE=${GOPATH}/src/github.com/luigi-riefolo/eGO
 ME=$(basename $0)
 OUT_FILE=/dev/stdout
 

@@ -11,7 +11,6 @@ set -e
 
 declare -A CONFIG_MAP
 SERVICE_NAME=
-PROJECT=
 ME=$(basename $0)
 USAGE_EXAMPLE="$ME --service alfa --proto"
 
@@ -68,7 +67,7 @@ while true; do
     case "$1" in
 
         -p | --project )
-            PROJECT="$2"
+            PROJECT_DIR="$2"
             shift 2
             ;;
 
@@ -95,7 +94,8 @@ while true; do
 done
 
 # script vars
-BASE=$GOPATH/src/$PROJECT
+BASE="${PROJECT_DIR:-$BASE}"
+
 DESTINATION_PATH=$BASE/src/$SERVICE_NAME
 PROTOS_PATH=$DESTINATION_PATH/pb
 CONFIG_FILE=$DESTINATION_PATH/conf/*.json
@@ -105,6 +105,7 @@ DEFINITIONS_PATH=$BASE/conf/
 
 # generate configuration
 CONFIG_FILE=$BASE/conf/global_conf.toml
+
 $BASE/scripts/config.sh --out $CONFIG_FILE
 CONFIG_DATA="$(cat $BASE/conf/global_conf.json)"
 
@@ -237,7 +238,7 @@ function add_services {
             IMPORT_PATH="${PROJECT}/src/${SERVICE}"
             PB_PACKAGE="${SERVICE}pb"
             IMPORTS+=("${PB_PACKAGE,,} \"${IMPORT_PATH}/pb"\")
-            IMPORTS+=("${SERVICE} \"${IMPORT_PATH}"\")
+            IMPORTS+=("\"${IMPORT_PATH}\"")
 
             # format the endpoint
             ENDPOINT="Register${SERVICE^}ServiceHandlerFromEndpoint"

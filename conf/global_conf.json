@@ -1,31 +1,38 @@
 {
-   "ConfigFile" : "/Users/luigi/Workspace/Go/work/src/github.com/luigi-riefolo/eGO/conf/global_conf.toml",
    "Omega" : {
-      "ShortName" : "omega",
-      "Name" : "Omega service",
       "Server" : {
-         "Host" : "localhost",
-         "Port" : 10103,
+         "Address" : "",
          "MicroServices" : [
             "omega"
          ],
-         "Address" : "",
+         "Port" : 10103,
+         "Host" : "localhost",
          "Clients" : [
             "beta"
          ]
       },
+      "ShortName" : "omega",
       "Database" : {
-         "Server" : "localhost",
          "ConnMax" : 5000,
          "Ports" : [
             8001,
             8001,
             8002
-         ]
-      }
+         ],
+         "Server" : "localhost"
+      },
+      "Name" : "Omega service"
    },
+   "ConfigFile" : "/Users/luigi/Workspace/Go/work/src/github.com/luigi-riefolo/eGO/conf/global_conf.toml",
    "Beta" : {
-      "ShortName" : "beta",
+      "Server" : {
+         "Address" : "",
+         "Port" : 10102,
+         "Host" : "localhost",
+         "Clients" : [
+            "omega"
+         ]
+      },
       "Database" : {
          "Ports" : [
             8001,
@@ -36,37 +43,30 @@
          "ConnMax" : 5000
       },
       "Name" : "Beta service",
-      "Server" : {
-         "Port" : 10102,
-         "Host" : "localhost",
-         "Clients" : [
-            "omega"
-         ],
-         "Address" : ""
-      }
+      "ShortName" : "beta"
    },
    "Alfa" : {
-      "ShortName" : "alfa",
       "Database" : {
+         "ConnMax" : 5000,
          "Ports" : [
             8001,
             8001,
             8002
          ],
-         "ConnMax" : 5000,
          "Server" : "localhost"
       },
+      "Name" : "Alfa service",
+      "ShortName" : "alfa",
       "Server" : {
-         "Host" : "localhost",
          "IsGateway" : true,
+         "GatewayPort" : 10100,
+         "Host" : "localhost",
          "Port" : 10101,
          "MicroServices" : [
             "alfa",
             "beta"
          ],
-         "Address" : "",
-         "GatewayPort" : 10100
-      },
-      "Name" : "Alfa service"
+         "Address" : ""
+      }
    }
 }

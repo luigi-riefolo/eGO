@@ -9,11 +9,13 @@ import (
 	"google.golang.org/grpc"
 
 	// Project packages
+	"github.com/luigi-riefolo/eGO/src/alfa"
+	alfapb "github.com/luigi-riefolo/eGO/src/alfa/pb"
+	"github.com/luigi-riefolo/eGO/src/beta"
+
 	"github.com/luigi-riefolo/eGO/pkg/config"
 	"github.com/luigi-riefolo/eGO/pkg/gateway"
 	"github.com/luigi-riefolo/eGO/pkg/server"
-	"github.com/luigi-riefolo/eGO/src/alfa"
-	alfapb "github.com/luigi-riefolo/eGO/src/alfa/pb"
 )
 
 // TODO: create clients

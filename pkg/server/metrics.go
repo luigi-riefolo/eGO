@@ -19,7 +19,7 @@ func (srv *Server) StartPrometheus() {
 	http.Handle("/metrics", promhttp.Handler())
 
 	go func() {
-        // TODO: use error log
+		// TODO: use error log
 		log.Println(http.ListenAndServe(":8080", nil))
 	}()
 }
