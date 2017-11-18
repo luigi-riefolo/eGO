@@ -1,18 +1,19 @@
 {
+   "ConfigFile" : "/Users/luigi/Workspace/Go/work/src/github.com/luigi-riefolo/eGO/conf/global_conf.toml",
    "Omega" : {
+      "ShortName" : "omega",
       "Name" : "Omega service",
       "Server" : {
-         "Clients" : [
-            "beta"
-         ],
-         "Port" : 10103,
          "Host" : "localhost",
+         "Port" : 10103,
          "MicroServices" : [
             "omega"
          ],
-         "Address" : ""
+         "Address" : "",
+         "Clients" : [
+            "beta"
+         ]
       },
-      "ShortName" : "omega",
       "Database" : {
          "Server" : "localhost",
          "ConnMax" : 5000,
@@ -23,8 +24,29 @@
          ]
       }
    },
-   "ConfigFile" : "/Users/luigi/Workspace/Go/work/src/github.com/luigi-riefolo/eGO/conf/global_conf.toml",
    "Beta" : {
+      "ShortName" : "beta",
+      "Database" : {
+         "Ports" : [
+            8001,
+            8001,
+            8002
+         ],
+         "Server" : "localhost",
+         "ConnMax" : 5000
+      },
+      "Name" : "Beta service",
+      "Server" : {
+         "Port" : 10102,
+         "Host" : "localhost",
+         "Clients" : [
+            "omega"
+         ],
+         "Address" : ""
+      }
+   },
+   "Alfa" : {
+      "ShortName" : "alfa",
       "Database" : {
          "Ports" : [
             8001,
@@ -34,39 +56,17 @@
          "ConnMax" : 5000,
          "Server" : "localhost"
       },
-      "ShortName" : "beta",
       "Server" : {
          "Host" : "localhost",
-         "Address" : "",
-         "Clients" : [
-            "omega"
-         ],
-         "Port" : 10102
-      },
-      "Name" : "Beta service"
-   },
-   "Alfa" : {
-      "ShortName" : "alfa",
-      "Server" : {
          "IsGateway" : true,
          "Port" : 10101,
-         "GatewayPort" : 10100,
          "MicroServices" : [
             "alfa",
             "beta"
          ],
-         "Host" : "localhost",
-         "Address" : ""
+         "Address" : "",
+         "GatewayPort" : 10100
       },
-      "Name" : "Alfa service",
-      "Database" : {
-         "ConnMax" : 5000,
-         "Server" : "localhost",
-         "Ports" : [
-            8001,
-            8001,
-            8002
-         ]
-      }
+      "Name" : "Alfa service"
    }
 }

@@ -7,8 +7,6 @@ import (
 	"net"
 	"time"
 
-	"github.com/grpc-ecosystem/go-grpc-middleware"
-	"github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	"github.com/grpc-ecosystem/go-grpc-prometheus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
@@ -72,16 +70,16 @@ func NewServer(conf config.Service) *Server {
 // Listen starts listening on a port.
 func (srv *Server) Listen() {
 
-	//srv.setServicesHealth()
-
-	// initialize Prometheus metrics
-	//srv.StartPrometheus()
+	srv.setServicesHealth()
 
 	go func() {
 		if err := srv.gRPC.Serve(srv.lis); err != nil {
 			log.Printf("Cannot listen and serve: %v", err)
 		}
 	}()
+
+	// initialize Prometheus metrics
+	srv.StartPrometheus()
 
 	log.Printf("Service %s listening on: %s", srv.name, srv.lis.Addr().String())
 }
@@ -97,6 +95,7 @@ func (srv *Server) HandleSig(sig string) {
 }
 
 // ContextTimeout ...
+// TODO: refactor
 func ContextTimeout(ctx context.Context) {
 	//	for {
 	select {

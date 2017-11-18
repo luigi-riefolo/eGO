@@ -175,6 +175,7 @@ function build_image {
         --build-arg SERVICE_NAME="$SERVICE_NAME" \
         --build-arg PROJECT="$PROJECT" \
         --build-arg CONFIG_FILE="$CONF_PATH" \
+        --no-cache \
         $BASE
 
         #$SERVICE_DIR

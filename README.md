@@ -54,7 +54,6 @@ go run src/alfa/cmd/main.go service -config conf/global_conf.toml
 BETA_SERVER_PORT=9090 go run src/alfa/cmd/main.go service -config conf/global_conf.toml
 
 go run src/alfa/cmd/main.go service -config conf/global_conf.toml -opts BETA_SERVER_PORT=9090
-
 ```
 
 ### Credits
@@ -73,3 +72,5 @@ More to be mentioned.
 [3]: https://github.com/devsu/grpc-gateway-generator
 [4]: https://github.com/harlow/go-micro-services
 [5]: https://gist.github.com/turtlemonvh/38bd3d73e61769767c35931d8c70ccb4
+[6]: http://marselester.com/prometheus-on-kubernetes.html
+[7]: https://github.com/marselester/prometheus-on-kubernetes

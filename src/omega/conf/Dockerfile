@@ -20,11 +20,11 @@ ARG PROJECT
 
 ## Usage: USER [UID]
 ##USER 751
-##ADD /Users/luigi/Workspace/alfa/src/alfa/cmd/alfa /
+##ADD /Users/luigi/Workspace/omega/src/omega/cmd/omega /
 
-##ADD . /go/src/github.com/luigi-riefolo/eGO/alfa
-##RUN go install github.com/luigi-riefolo/eGO/alfa/cmd
-##ENTRYPOINT ["/go/bin/alfa"]
+##ADD . /go/src/github.com/luigi-riefolo/eGO/omega
+##RUN go install github.com/luigi-riefolo/eGO/omega/cmd
+##ENTRYPOINT ["/go/bin/omega"]
 
 ADD $CONFIG_FILE /
 
@@ -32,4 +32,4 @@ ADD src/${SERVICE_NAME}/cmd/${SERVICE_NAME} /
 
 EXPOSE 8080
 
-CMD ["/alfa", "service", "-config", "global_conf.toml"]
+CMD ["/omega", "service", "-config", "global_conf.toml"]

@@ -1,23 +1,23 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: alfa
+  name: omega
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: alfa
+      app: omega
   template:
     metadata:
       labels:
-        app: alfa
+        app: omega
     spec:
       containers:
-        - name: alfa
-          image: localhost:5000/alfa:v1
+        - name: omega
+          image: localhost:5000/omega:v1
           ports:
-            - name: alfa-service
-              containerPort: 10100
+            - name: omega-service
+              containerPort: 10103
             - name: prometheus
               containerPort: 8080
       imagePullSecrets:

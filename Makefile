@@ -9,8 +9,6 @@ init:
 	./scripts/setup_kubernetes.sh
 
 config:
-#tomlv some-toml-file.toml
-#go-bindata -o data/bindata.go -pkg data data/*.json
 
 check:
 	./scripts/go_checker.sh
@@ -20,5 +18,13 @@ build:
 test:
 
 clean:
+
+kubernetes:
+	./scripts/setup_kubernetes.sh
+
+prometheus:
+	./scripts/setup_prometheus.sh
+
+
 
 .PHONY: init config check build test clean

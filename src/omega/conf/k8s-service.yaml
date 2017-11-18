@@ -1,18 +1,18 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: alfa
+  name: omega
   labels:
-    app: alfa
+    app: omega
 spec:
   type: LoadBalancer
   selector:
-    app: alfa
+    app: omega
   ports:
-  - name: alfa-service
+  - name: omega-service
     protocol: TCP
-    port: 10100
-    targetPort: 10100
+    port: 10103
+    targetPort: 10103
   - name: prometheus
     protocol: TCP
     port: 8080
