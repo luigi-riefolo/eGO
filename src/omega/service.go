@@ -1,7 +1,7 @@
 package omega
 
 import (
-	"fmt"
+	"log"
 
 	"golang.org/x/net/context"
 
@@ -25,7 +25,7 @@ func NewService(conf config.Config) pb.OmegaServiceServer {
 
 // Echo ...
 func (s *Service) Echo(ctx context.Context, msg *pb.Message) (*pb.Message, error) {
-	fmt.Printf("OMEGA ECHO\n")
+	log.Println("Omega echo")
 	return msg, nil
 }
 

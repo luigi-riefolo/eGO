@@ -9,6 +9,7 @@ import (
 
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
+	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/grpc-ecosystem/go-grpc-prometheus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
@@ -49,14 +50,14 @@ func NewServer(conf config.Service) *Server {
 		grpc.RPCCompressor(grpc.NewGZIPCompressor()),
 		grpc.RPCDecompressor(grpc.NewGZIPDecompressor()),
 		grpc.MaxMsgSize(config.MaxMsgSize),
-		grpc_middleware.WithUnaryServerChain(
-			//grpc_opentracing.UnaryServerInterceptor(),
-
+		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
+			grpc_opentracing.UnaryServerInterceptor(),
+			TimeoutInterceptor,
 			grpc_prometheus.UnaryServerInterceptor,
 			//       grpc_auth.UnaryServerInterceptor(myAuthFunction),
 			//grpc_validator
 			grpc_recovery.UnaryServerInterceptor(recoveryOpts...),
-		),
+		)),
 	}
 
 	srv := &Server{

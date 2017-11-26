@@ -1,5 +1,7 @@
 # eGO - Enlightening Golang
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 eGO is a project skeleton that uses Golang and gRPC.
 
 The intention of this project is to propose a simple approach to the
@@ -100,3 +102,6 @@ More to be mentioned.
 [6]: http://marselester.com/prometheus-on-kubernetes.html
 [7]: https://github.com/marselester/prometheus-on-kubernetes
 [8]: https://www.docker.com
+[9]: https://github.com/giantswarm/kubernetes-prometheus
+[10]: https://github.com/olivere/grpc
+[11]: https://medium.com/@harlow/tracing-grpc-calls-in-golang-with-google-stackdriver-b22495763a06

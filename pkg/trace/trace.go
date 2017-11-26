@@ -1,8 +1,9 @@
-package lib
+package trace
 
 import (
 	"context"
 	"fmt"
+	"log"
 	"strings"
 
 	"google.golang.org/grpc"
@@ -11,13 +12,28 @@ import (
 	"cloud.google.com/go/trace"
 )
 
+// Test ...
+func Test(ctx context.Context) {
+	tc, err := trace.NewClient(ctx, "{PROJECT-ID}")
+	if err != nil {
+		log.Fatalf("Trace client could not be created: %v", err)
+	}
+	_ = EnableGRPCTracingServerOption(tc)
+}
+
 //func getNearbyPoints(ctx context.Context, lat, lon float64) []geoindex.Point {
 //span := trace.FromContext(ctx).NewChild("geo.getNearbyPoints")
 //defer span.Finish()
 
 // EnableGRPCTracingDialOption enables tracing of requests that are sent over a gRPC connection.
 // Modified version of: https://github.com/GoogleCloudPlatform/google-cloud-go/blob/master/trace/trace.go#L242-L265
-var EnableGRPCTracingDialOption = grpc.WithUnaryInterceptor(grpc.UnaryClientInterceptor(clientInterceptor))
+//var EnableGRPCTracingDialOption = grpc.WithUnaryInterceptor(grpc.UnaryClientInterceptor(clientInterceptor))
+
+// EnableGRPCTracingServerOption enables parsing google trace header from metadata
+// and adds a new child span to the incoming request context.
+func EnableGRPCTracingServerOption(traceClient *trace.Client) grpc.ServerOption {
+	return grpc.UnaryInterceptor(serverInterceptor(traceClient))
+}
 
 func clientInterceptor(ctx context.Context, method string, req, reply interface{}, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
 	// trace current request w/ child span
@@ -41,12 +57,6 @@ func clientInterceptor(ctx context.Context, method string, req, reply interface{
 	ctx = metadata.NewIncomingContext(ctx, md)
 
 	return invoker(ctx, method, req, reply, cc, opts...)
-}
-
-// EnableGRPCTracingServerOption enables parsing google trace header from metadata
-// and adds a new child span to the incoming request context.
-func EnableGRPCTracingServerOption(traceClient *trace.Client) grpc.ServerOption {
-	return grpc.UnaryInterceptor(serverInterceptor(traceClient))
 }
 
 func serverInterceptor(traceClient *trace.Client) grpc.UnaryServerInterceptor {

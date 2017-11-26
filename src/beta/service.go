@@ -53,11 +53,11 @@ func (s *Service) Test(ctx context.Context, req *empty.Empty) (*pb.Message, erro
 	msg := &pb.Message{
 		Msg: "OK BETA!!!",
 	}
-	/*
-		_, err := s.omegaClient.Echo(ctx, &omegapb.Message{Msg: "YES"})
-		if err != nil {
-			log.Printf("Omega client err: %#v\n", err)
-		}
-	*/
+
+	_, err := s.omegaClient.Echo(ctx, &omegapb.Message{Msg: "YES"})
+	if err != nil {
+		log.Printf("Omega client err: %#v\n", err)
+	}
+
 	return msg, nil
 }

@@ -19,14 +19,14 @@ HealthCheckResponse_UNKNOWN     HealthCheckResponse_ServingStatus = 0
 */
 func (srv *Server) setServicesHealth() {
 
-	log.Printf("Services health monitor started")
-
 	for service := range srv.gRPC.GetServiceInfo() {
 		srv.health.SetServingStatus(service, healthpb.HealthCheckResponse_SERVING)
-		log.Printf("Service %s is serving\n", service)
+		// TODO: use debug log
+		//log.Printf("Service health info %s is serving\n", service)
 	}
 
 	srv.startHealthMonitor()
+	log.Printf("%s server health monitor started", srv.name)
 }
 
 func (srv *Server) startHealthMonitor() {

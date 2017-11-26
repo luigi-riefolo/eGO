@@ -209,8 +209,7 @@ function deploy {
 
 function go_code {
 
-	${ME_DIR}/go_checker.sh
-
+    :;
     #go test -coverprofile cover.outs ${SERVICE_DIR}
 
     # show in browser

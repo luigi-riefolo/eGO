@@ -19,7 +19,7 @@ import (
 
 //ALFA_SERVER_PORT=4444 go run main.go service -opts CONFIG=../../../conf/global_conf.toml,ALFA_SERVER_PORT=90932
 
-const confKey = "CONFIG"
+const confKey = "CONFIG_FILE"
 
 // list of overwritable config values
 // NOTE: the order is config, environment

@@ -1,18 +1,56 @@
+---
+# TODO: use https://github.com/grafana/grafana/blob/master/docs/sources/administration/provisioning.md
+# as soon as 4.7 is out
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: grafana-deployment
+  namespace: monitoring
+  labels:
+    app: grafana
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: grafana-server
+        app: grafana
     spec:
       containers:
         - name: grafana
           image: grafana/grafana:latest
-          args:
-            - "-e GF_SECURITY_ADMIN_PASSWORD=secret"
           ports:
             - containerPort: 3000
+          resources:
+            # keep request = limit to keep this container in guaranteed class
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          env:
+            - name: GF_AUTH_BASIC_ENABLED
+              value: "true"
+            - name: GF_AUTH_ANONYMOUS_ENABLED
+              value: "false"
+            # does not really work, because of template variables in exported dashboards:
+            # - name: GF_DASHBOARDS_JSON_ENABLED
+            #   value: "true"
+          readinessProbe:
+            httpGet:
+              path: /login
+              port: 3000
+            # initialDelaySeconds: 30
+            # timeoutSeconds: 1
+          volumeMounts:
+          - name: grafana-persistent-storage
+            mountPath: /var
+#          - name: grafana-config-volume
+#            mountPath: /etc
+      volumes:
+      - name: grafana-persistent-storage
+        emptyDir: {}
+#      - name: grafana-config-volume
+#        configMap:
+#          defaultMode: 420
+#          name: grafana-server-conf

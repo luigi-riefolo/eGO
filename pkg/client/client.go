@@ -17,6 +17,12 @@ var (
 		grpc.WithInsecure(),
 		grpc.WithCompressor(grpc.NewGZIPCompressor()),
 		grpc.WithDecompressor(grpc.NewGZIPDecompressor()),
+		//func WithMaxMsgSize(s int) DialOption
+		//func WithTimeout(d time.Duration) DialOption
+		//func WithUnaryInterceptor(f UnaryClientInterceptor) DialOption
+		//func WithStatsHandler(h stats.Handler) DialOption
+		//func WithTransportCredentials(creds credentials.TransportCredentials) DialOption
+		//func WithPerRPCCredentials(creds credentials.PerRPCCredentials) DialOption
 	}
 )
 

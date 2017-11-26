@@ -12,7 +12,7 @@ name = "Luigi Riefolo"
 date_created = "2017-08-27T10:30:00+01:00"
 
 [alfa.server]
-host = "localhost"
+host = "alfa"
 port = 10101
 is_gateway = true
 gateway_port = 10100
@@ -58,7 +58,7 @@ name = "Luigi Riefolo"
 date_created = "2017-08-27T10:30:00+01:00"
 
 [omega.server]
-host = "localhost"
+host = "omega"
 port = 10103
 clients = [ "beta" ]
 micro_services = [ "omega" ]

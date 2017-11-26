@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# Script for automating the setup of kubectl and minikube.
-
+# Script for automating the setup of kubectl.
 
 set -xe
 
@@ -32,21 +31,3 @@ rm -f /usr/local/bin/docker-machine
 brew link --overwrite docker-machine
 
 brew services restart docker-machine
-
-# Minikube
-echo "Installing minikube"
-
-[[ -e /usr/local/bin/minikube ]] && {
-    minikube delete || true
-    sudo rm /usr/local/bin/minikube
-    sudo rm -rf ~/.minikube
-}
-curl -sLo minikube https://storage.googleapis.com/minikube/releases/v0.23.0/minikube-darwin-amd64
-chmod +x minikube
-sudo mv minikube /usr/local/bin/
-
-eval $(minikube docker-env)
-
-minikube start --vm-driver=xhyve
-
-echo "Done"

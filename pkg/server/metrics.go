@@ -23,19 +23,3 @@ func (srv *Server) StartPrometheus() {
 		log.Println(http.ListenAndServe(":8080", nil))
 	}()
 }
-
-/*
-func metricTest() {
-	promhttp
-// Try it once more, this time with a help string.
-pushCounter = prometheus.NewCounter(prometheus.CounterOpts{
-    Name: "repository_pushes",
-    Help: "Number of pushes to external repository.",
-})
-err = prometheus.Register(pushCounter)
-if err != nil {
-    fmt.Println("Push counter couldn't be registered AGAIN, no counting will happen:", err)
-    return
-}
-}
-*/

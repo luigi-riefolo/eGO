@@ -1,38 +1,17 @@
 {
-   "Omega" : {
+   "Alfa" : {
       "Server" : {
          "Address" : "",
+         "IsGateway" : true,
+         "Port" : 10101,
+         "Host" : "alfa",
+         "GatewayPort" : 10100,
          "MicroServices" : [
-            "omega"
-         ],
-         "Port" : 10103,
-         "Host" : "localhost",
-         "Clients" : [
+            "alfa",
             "beta"
          ]
       },
-      "ShortName" : "omega",
-      "Database" : {
-         "ConnMax" : 5000,
-         "Ports" : [
-            8001,
-            8001,
-            8002
-         ],
-         "Server" : "localhost"
-      },
-      "Name" : "Omega service"
-   },
-   "ConfigFile" : "/Users/luigi/Workspace/Go/work/src/github.com/luigi-riefolo/eGO/conf/global_conf.toml",
-   "Beta" : {
-      "Server" : {
-         "Address" : "",
-         "Port" : 10102,
-         "Host" : "localhost",
-         "Clients" : [
-            "omega"
-         ]
-      },
+      "Name" : "Alfa service",
       "Database" : {
          "Ports" : [
             8001,
@@ -42,31 +21,52 @@
          "Server" : "localhost",
          "ConnMax" : 5000
       },
-      "Name" : "Beta service",
-      "ShortName" : "beta"
+      "ShortName" : "alfa"
    },
-   "Alfa" : {
+   "Omega" : {
       "Database" : {
+         "Server" : "localhost",
          "ConnMax" : 5000,
          "Ports" : [
             8001,
             8001,
             8002
-         ],
-         "Server" : "localhost"
+         ]
       },
-      "Name" : "Alfa service",
-      "ShortName" : "alfa",
+      "ShortName" : "omega",
+      "Name" : "Omega service",
       "Server" : {
-         "IsGateway" : true,
-         "GatewayPort" : 10100,
-         "Host" : "localhost",
-         "Port" : 10101,
-         "MicroServices" : [
-            "alfa",
+         "Clients" : [
             "beta"
+         ],
+         "Port" : 10103,
+         "Host" : "omega",
+         "MicroServices" : [
+            "omega"
          ],
          "Address" : ""
       }
-   }
+   },
+   "Beta" : {
+      "Name" : "Beta service",
+      "Server" : {
+         "Host" : "localhost",
+         "Port" : 10102,
+         "Clients" : [
+            "omega"
+         ],
+         "Address" : ""
+      },
+      "Database" : {
+         "Server" : "localhost",
+         "ConnMax" : 5000,
+         "Ports" : [
+            8001,
+            8001,
+            8002
+         ]
+      },
+      "ShortName" : "beta"
+   },
+   "ConfigFile" : "/Users/luigi/Workspace/Go/work/src/github.com/luigi-riefolo/eGO/conf/global_conf.toml"
 }

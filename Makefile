@@ -1,5 +1,9 @@
 include .env
+
 export
+
+# TODO:
+# quote the SERVERS variable in .env and split on spaces in the Makefile
 
 # single service
 ifeq ($(filter $(firstword $(MAKECMDGOALS)),"run" "config"),)
@@ -11,7 +15,7 @@ endif
 # Build the project
 all: clean init config check build test
 
-init: kubernetes monitoring
+init: kubernetes monitoring network
 
 configure:
 	@./tools/grpc-generator/generate.sh --service $(RUN_ARGS)
@@ -28,25 +32,21 @@ build:
 
 run: configure build
 
-run_all:
-	@$(foreach VAR,$(SERVERS), \
+run_all: all_config
+	$(foreach VAR,$(SERVERS), \
 	./scripts/build.sh --service $(VAR);)
+	@kubectl get pods --all-namespaces
 
 test:
 
 clean:
 
 kubernetes:
-	./scripts/setup_kubernetes.sh
+	@./scripts/setup_kubernetes.sh
 
 minikube:
-	@STATUS=$$(minikube status --format {{.MinikubeStatus}}); \
-	if [[ "$$STATUS" != "Running" ]]; \
-	then \
-		minikube start --vm-driver=xhyve; \
-    fi
+	@./scripts/setup_minikube.sh
 
-# Monitoring
 monitoring: prometheus grafana
 
 prometheus:
@@ -54,6 +54,9 @@ prometheus:
 
 grafana:
 	@./scripts/setup_grafana.sh
+
+network:
+	@./scripts/setup_network.sh
 
 
 .PHONY: run init configure check build test clean minikube monitoring \
