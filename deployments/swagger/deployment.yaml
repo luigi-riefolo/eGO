@@ -1,0 +1,40 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: swagger-deployment
+  namespace: testing
+  labels:
+    app: swagger
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: swagger
+    spec:
+      containers:
+        - name: swagger
+          image: swaggerapi/swagger-ui
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SWAGGER_JSON
+              value: "/data/swagger.json"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+          volumeMounts:
+          - name: swagger-config-volume
+            mountPath: /data
+      volumes:
+      - name: swagger-config-volume
+        configMap:
+          defaultMode: 420
+          name: swagger-config

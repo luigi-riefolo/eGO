@@ -1,27 +1,48 @@
 {
    "Alfa" : {
+      "Name" : "Alfa service",
+      "ShortName" : "alfa",
       "Server" : {
-         "Address" : "",
-         "IsGateway" : true,
-         "Port" : 10101,
-         "Host" : "alfa",
-         "GatewayPort" : 10100,
          "MicroServices" : [
             "alfa",
             "beta"
-         ]
+         ],
+         "Host" : "alfa",
+         "Port" : 10101,
+         "IsGateway" : true,
+         "Address" : "",
+         "GatewayPort" : 10100
       },
-      "Name" : "Alfa service",
       "Database" : {
+         "ConnMax" : 5000,
+         "Server" : "localhost",
          "Ports" : [
             8001,
             8001,
             8002
-         ],
+         ]
+      }
+   },
+   "Beta" : {
+      "ShortName" : "beta",
+      "Name" : "Beta service",
+      "Database" : {
          "Server" : "localhost",
-         "ConnMax" : 5000
+         "ConnMax" : 5000,
+         "Ports" : [
+            8001,
+            8001,
+            8002
+         ]
       },
-      "ShortName" : "alfa"
+      "Server" : {
+         "Port" : 10102,
+         "Clients" : [
+            "omega"
+         ],
+         "Address" : "",
+         "Host" : "localhost"
+      }
    },
    "Omega" : {
       "Database" : {
@@ -33,40 +54,19 @@
             8002
          ]
       },
-      "ShortName" : "omega",
-      "Name" : "Omega service",
       "Server" : {
+         "Port" : 10103,
          "Clients" : [
             "beta"
          ],
-         "Port" : 10103,
-         "Host" : "omega",
+         "Address" : "",
          "MicroServices" : [
             "omega"
          ],
-         "Address" : ""
-      }
-   },
-   "Beta" : {
-      "Name" : "Beta service",
-      "Server" : {
-         "Host" : "localhost",
-         "Port" : 10102,
-         "Clients" : [
-            "omega"
-         ],
-         "Address" : ""
+         "Host" : "omega"
       },
-      "Database" : {
-         "Server" : "localhost",
-         "ConnMax" : 5000,
-         "Ports" : [
-            8001,
-            8001,
-            8002
-         ]
-      },
-      "ShortName" : "beta"
+      "ShortName" : "omega",
+      "Name" : "Omega service"
    },
    "ConfigFile" : "/Users/luigi/Workspace/Go/work/src/github.com/luigi-riefolo/eGO/conf/global_conf.toml"
 }

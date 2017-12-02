@@ -1,19 +1,28 @@
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: prometheus-deployment
+  namespace: monitoring
+  labels:
+    app: prometheus
 spec:
   replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       labels:
-        app: prometheus-server
+        app: prometheus
     spec:
       containers:
         - name: prometheus
           image: prom/prometheus:latest
           args:
-            - "--config.file=/etc/prometheus/prometheus.yml"
+            - "--config.file=/etc/prometheus/prometheus.yaml"
             - "--storage.tsdb.path=/prometheus/"
           ports:
             - containerPort: 9090
@@ -26,6 +35,6 @@ spec:
         - name: prometheus-config-volume
           configMap:
             defaultMode: 420
-            name: prometheus-server-conf
+            name: prometheus-config
         - name: prometheus-storage-volume
           emptyDir: {}

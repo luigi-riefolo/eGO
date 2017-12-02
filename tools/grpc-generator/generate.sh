@@ -102,6 +102,7 @@ CONFIG_FILE=$DESTINATION_PATH/conf/*.json
 
 STUBS_PATH=$DESTINATION_PATH/pb
 DEFINITIONS_PATH=$BASE/conf/
+SWAGGER_PATH=$BASE/deployments/swagger/conf
 
 # generate configuration
 CONFIG_FILE=$BASE/conf/global_conf.toml
@@ -172,7 +173,6 @@ function generate_stubs {
             --go_out=plugins=grpc:${STUBS_PATH} \
             $F
     done
-            #-I${GOPATH}/src/github.com/google/protobuf/src \
 }
 
 
@@ -199,7 +199,7 @@ function generate_swagger_definitions {
             -I${PROTOS_PATH} \
             -I${GOPATH}/src \
             -I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-            --swagger_out=logtostderr=true:${DEFINITIONS_PATH} \
+            --swagger_out=logtostderr=true:${SWAGGER_PATH} \
             $F
     done
 }

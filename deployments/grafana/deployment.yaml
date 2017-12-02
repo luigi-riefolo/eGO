@@ -10,6 +10,11 @@ metadata:
     app: grafana
 spec:
   replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       labels:
@@ -20,36 +25,36 @@ spec:
           image: grafana/grafana:latest
           ports:
             - containerPort: 3000
-          resources:
-            # keep request = limit to keep this container in guaranteed class
-            limits:
-              cpu: 100m
-              memory: 100Mi
-            requests:
-              cpu: 100m
-              memory: 100Mi
-          env:
-            - name: GF_AUTH_BASIC_ENABLED
-              value: "true"
-            - name: GF_AUTH_ANONYMOUS_ENABLED
-              value: "false"
+#          resources:
+#            # keep request = limit to keep this container in guaranteed class
+#            limits:
+#              cpu: 100m
+#              memory: 100Mi
+#            requests:
+#              cpu: 100m
+#              memory: 100Mi
+#          env:
+#            - name: GF_AUTH_BASIC_ENABLED
+#              value: "true"
+#            - name: GF_AUTH_ANONYMOUS_ENABLED
+#              value: "false"
             # does not really work, because of template variables in exported dashboards:
             # - name: GF_DASHBOARDS_JSON_ENABLED
             #   value: "true"
-          readinessProbe:
-            httpGet:
-              path: /login
-              port: 3000
+#          readinessProbe:
+#            httpGet:
+#              path: /login
+#              port: 3000
             # initialDelaySeconds: 30
             # timeoutSeconds: 1
-          volumeMounts:
-          - name: grafana-persistent-storage
-            mountPath: /var
+#          volumeMounts:
+#          - name: grafana-persistent-storage
+#            mountPath: /var
 #          - name: grafana-config-volume
 #            mountPath: /etc
-      volumes:
-      - name: grafana-persistent-storage
-        emptyDir: {}
+#      volumes:
+#      - name: grafana-persistent-storage
+#        emptyDir: {}
 #      - name: grafana-config-volume
 #        configMap:
 #          defaultMode: 420

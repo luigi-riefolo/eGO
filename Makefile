@@ -2,6 +2,11 @@ include .env
 
 export
 
+
+#VERSION=$(shell git rev-parse --abbrev-ref HEAD)
+#git rev-parse HEAD
+#git rev-parse --abbrev-ref HEAD
+
 # TODO:
 # quote the SERVERS variable in .env and split on spaces in the Makefile
 
@@ -17,7 +22,7 @@ all: clean init config check build test
 
 init: kubernetes monitoring network
 
-configure:
+config:
 	@./tools/grpc-generator/generate.sh --service $(RUN_ARGS)
 
 all_config:
@@ -30,7 +35,7 @@ check:
 build:
 	@./scripts/build.sh --service $(RUN_ARGS)
 
-run: configure build
+run: config build
 
 run_all: all_config
 	$(foreach VAR,$(SERVERS), \
@@ -40,6 +45,13 @@ run_all: all_config
 test:
 
 clean:
+
+
+swagger:
+	echo $(BASE)
+#	@docker run -p 8080:8080 \
+#		-e SWAGGER_JSON=/data/*swagger.json \
+#		-v $(BASE)/deployments/swagger/conf:/data swaggerapi/swagger-ui
 
 kubernetes:
 	@./scripts/setup_kubernetes.sh
@@ -59,5 +71,5 @@ network:
 	@./scripts/setup_network.sh
 
 
-.PHONY: run init configure check build test clean minikube monitoring \
+.PHONY: run init config check build test clean minikube monitoring \
 	grafana prometheus test kubernetes run run_all all_config
