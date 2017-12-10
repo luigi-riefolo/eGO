@@ -93,17 +93,14 @@ while true; do
 done
 
 [[ -z $DOCKER_USER ]] && {
-    echo "Please supply a Docker user"
-    exit 1
+    read -t 30 -p "Please supply a Docker user: " DOCKER_USER
 }
 
 [[ -z $USER_EMAIL ]] && {
-    echo "Please supply user's email"
-    exit 1
+    read -t 30 -p "Please supply user's email: " USER_EMAIL
 }
 
-
-read -s -p "Please type the Docker password:    " DOCKER_PASS
+read -s -p "Please type the Docker password: " DOCKER_PASS
 
 echo "Docker login"
 docker login --username "${DOCKER_USER}" --password "$DOCKER_PASS"
@@ -166,8 +163,8 @@ done
 
 echo "Starting registry"
 PORT=${REGISTRY##*:}
-#nohup  kubectl port-forward --namespace kube-system "$POD" $PORT:$PORT &>/dev/null &
-kubectl port-forward --namespace kube-system "$POD" $PORT:$PORT
+nohup  kubectl port-forward --namespace kube-system "$POD" $PORT:$PORT &>/dev/null &
+#kubectl port-forward --namespace kube-system "$POD" $PORT:$PORT
 
 # NOTE: kubectl fails to tunnel the first request
 curl -s http://"${REGISTRY}"/v2/_catalog 2>&1 >/dev/null

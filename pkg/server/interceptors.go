@@ -3,15 +3,13 @@ package server
 import (
 	"context"
 	"log"
-	"time"
 
+	"github.com/luigi-riefolo/eGO/pkg/config"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 )
 
-const requestTimeout = 10 * time.Second
-
-type cxtKey string
+type ctxKey string
 
 // RecoveryInterceptor intercepts panic signals and tries to recover.
 func RecoveryInterceptor(p interface{}) error {
@@ -27,7 +25,7 @@ func RecoveryInterceptor(p interface{}) error {
 func TimeoutInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
 	ctx, cancel := context.WithTimeout(
 		ctx,
-		requestTimeout)
+		config.ServerRequestTimeout)
 	defer cancel()
 
 	return handler(ctx, req)
@@ -37,8 +35,6 @@ func TimeoutInterceptor(ctx context.Context, req interface{}, info *grpc.UnarySe
 // TODO: example of UnaryInterceptor, use it for auth
 func UnaryInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
 
-	var k cxtKey
-	k = "user_id"
-	newCtx := context.WithValue(ctx, k, "USER_ID")
+	newCtx := context.WithValue(ctx, ctxKey("user_id"), "USER_ID")
 	return handler(newCtx, req)
 }

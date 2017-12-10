@@ -46,12 +46,12 @@ test:
 
 clean:
 
+registry:
+	@./tools/registry/create_registry.sh
 
 swagger:
 	echo $(BASE)
-#	@docker run -p 8080:8080 \
-#		-e SWAGGER_JSON=/data/*swagger.json \
-#		-v $(BASE)/deployments/swagger/conf:/data swaggerapi/swagger-ui
+	@./scripts/deploy.sh swagger
 
 kubernetes:
 	@./scripts/setup_kubernetes.sh
@@ -72,4 +72,4 @@ network:
 
 
 .PHONY: run init config check build test clean minikube monitoring \
-	grafana prometheus test kubernetes run run_all all_config
+	grafana prometheus test kubernetes run run_all all_config registry

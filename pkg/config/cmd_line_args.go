@@ -45,10 +45,6 @@ func parseArgs() bool {
 	serviceSet.StringVar(&confFile, "config", "", "TOML configuration file")
 	serviceSet.StringVar(&opts, "opts", "", "Comma-separated list of configuration values to be overwritten")
 
-	/*
-		serviceSet.IntVar(&logLevel, "log-level", 1, "log level: 0 Info, 1 Debug [default]")
-	*/
-
 	ok := false
 	switch os.Args[1] {
 

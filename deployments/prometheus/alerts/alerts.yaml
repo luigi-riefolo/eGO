@@ -1,0 +1,12 @@
+## Prometheus server ConfigMap entries
+serverFiles:
+  alerts: |-
+    ## alert.rules ##
+    ALERT NodeLoadAverage
+      IF ((node_load5 / count without (cpu, mode) (node_cpu{mode="system"})) > 3)
+      FOR 2m
+      ANNOTATIONS {
+        SUMMARY = "{{$labels.instance}}: High LA detected",
+        DESCRIPTION = "{{$labels.instance}}: LA is high"
+      }
+    # more alerts below

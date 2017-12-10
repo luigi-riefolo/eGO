@@ -2,9 +2,10 @@ package config
 
 import "time"
 
-// TODO: move into service conf TOML and template
+// List of gRCP configuration values.
 const (
-	BackoffDelay   = 5 * time.Second
-	MaxMsgSize     = 1 << 11 // 2048
-	RequestTimeout = 5000 * time.Millisecond
+	BackoffDelay         = 5 * time.Second
+	MaxMsgSize           = 1 << 11 // 2048
+	ClientRequestTimeout = 15 * time.Second
+	ServerRequestTimeout = 5 * time.Second
 )

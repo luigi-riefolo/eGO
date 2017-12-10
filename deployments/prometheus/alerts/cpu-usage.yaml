@@ -1,0 +1,19 @@
+groups:
+- name: cpu-rules
+  interval: 30s   # defaults to global interval
+  rules:
+  - record: instance:errors:rate5m
+    expr: rate(errors_total[5m])
+  - record: instance:requests:rate5m
+    expr: rate(requests_total[5m])
+  - alert: NodeCPUUsage
+    # Expressions remain PromQL as before and can be spread over
+    # multiple lines via YAML’s multi-line strings.
+    expr: |
+      IF (100 - (avg by (instance) (irate(node_cpu{name="node-exporter",mode="idle"}[5m])) * 100)) > 75
+    for: 5m
+    labels:
+      severity: page
+    annotations:
+      summary: "{{$labels.instance}}: High CPU usage detected"
+      description: "{{$labels.instance}}: CPU usage is above 75% (current value is: {{ $value }})"
