@@ -2,9 +2,33 @@
 
 # Gateway TOML definition.
 
+[gateway]
+
+name = "Gateway service"
+short_name = "gateway"
+
+[gateway.owner]
+name = "Luigi Riefolo"
+date_created = "2017-08-27T10:30:00+01:00"
+
+[gateway.server]
+host = "gateway"
+port = 10101
+is_gateway = true
+gateway_port = 10100
+micro_services = [ "gateway", "alfa" ]
+
+[gateway.database]
+server = "localhost"
+ports = [ 8001, 8001, 8002 ]
+connection_max = 5000
+
+
+# Alfa service TOML definition.
+
 [alfa]
 
-name = "Alfa service"
+name= "Alfa service"
 short_name = "alfa"
 
 [alfa.owner]
@@ -12,35 +36,11 @@ name = "Luigi Riefolo"
 date_created = "2017-08-27T10:30:00+01:00"
 
 [alfa.server]
-host = "alfa"
-port = 10101
-is_gateway = true
-gateway_port = 10100
-micro_services = [ "alfa", "beta" ]
-
-[alfa.database]
-server = "localhost"
-ports = [ 8001, 8001, 8002 ]
-connection_max = 5000
-
-
-# Beta service TOML definition.
-
-[beta]
-
-name= "Beta service"
-short_name = "beta"
-
-[beta.owner]
-name = "Luigi Riefolo"
-date_created = "2017-08-27T10:30:00+01:00"
-
-[beta.server]
 host = "localhost"
 port = 10102
 clients = [ "omega" ]
 
-[beta.database]
+[alfa.database]
 server = "localhost"
 ports = [ 8001, 8001, 8002 ]
 connection_max = 5000
@@ -60,7 +60,7 @@ date_created = "2017-08-27T10:30:00+01:00"
 [omega.server]
 host = "omega"
 port = 10103
-clients = [ "beta" ]
+clients = [ "alfa" ]
 micro_services = [ "omega" ]
 
 [omega.database]

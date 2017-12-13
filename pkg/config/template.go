@@ -6,8 +6,8 @@ package config
 type Config struct {
 	ConfigFile string `toml:"-"`
 	// List of services
+	Gateway  Service `toml:"gateway"`
 	Alfa  Service `toml:"alfa"`
-	Beta  Service `toml:"beta"`
 	Omega Service `toml:"omega"`
 }
 

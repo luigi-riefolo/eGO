@@ -11,7 +11,7 @@ import (
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/luigi-riefolo/eGO/pkg/config"
-	"github.com/luigi-riefolo/eGO/pkg/server"
+	"github.com/luigi-riefolo/eGO/pkg/service"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 )
@@ -26,33 +26,40 @@ type registerFromEndpoint func(ctx context.Context, mux *runtime.ServeMux, addr 
 
 // Gateway represents an implementation of the GatewayServer interface.
 type Gateway struct {
-	Creds    credentials.TransportCredentials
-	DialOpts []grpc.DialOption
-	Host     string
-	Port     int
-	//mux        *http.ServeMux
+	Creds      credentials.TransportCredentials
+	DialOpts   []grpc.DialOption
+	Host       string
+	Port       int
 	ListenAddr string
 	Mux        *runtime.ServeMux
-	Services   map[string]*server.Server
+	Services   service.List
+}
+
+// New creates a gateway.
+func New(ctx context.Context, conf config.Service, opts []grpc.DialOption, svcList service.List, regFn registerFromEndpoint) (*Gateway, error) {
+
+	gw := &Gateway{
+		Mux:      runtime.NewServeMux(),
+		DialOpts: opts,
+	}
+
+	//loadCerts(gw)
+
+	gw.ListenAddr = fmt.Sprintf(":%d", conf.Server.GatewayPort)
+
+	if err := regFn(ctx, gw.Mux, gw.ListenAddr, gw.DialOpts); err != nil {
+		return nil, fmt.Errorf("failed to register gateway endpoints: %v", err)
+	}
+
+	gw.Services = svcList
+
+	return gw, nil
 }
 
 // LoadEndpoint ...
-func (gw *Gateway) LoadEndpoint(ctx context.Context, serviceConf config.Service, regFn registerFromEndpoint) {
+func (gw *Gateway) LoadEndpoint(ctx context.Context, serviceConf config.Service) {
 
-	addr := fmt.Sprintf(":%d", serviceConf.Server.Port)
-
-	if err := regFn(ctx, gw.Mux, addr, gw.DialOpts); err != nil {
-		log.Fatalf("failed to register endpoint: %v", err)
-	}
 }
-
-/*
-func (gw *gateway) initStaticContentHandlers() {
-	// Static content handlers
-	swaggerHandler := http.FileServer(http.Dir("swagger-ui"))
-	gw.mux.Handle("/help/", http.StripPrefix("/help/", swaggerHandler))
-}
-*/
 
 // ListenAndServe ...
 func (gw *Gateway) ListenAndServe() error {

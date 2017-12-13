@@ -1,0 +1,24 @@
+apiVersion: apps/v1alfa1
+kind: Deployment
+metadata:
+  name: gateway
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+        - name: gateway
+          image: localhost:5000/gateway:v1
+          ports:
+            - name: gateway-service
+              containerPort: 10100
+            - name: prometheus
+              containerPort: 8080
+      imagePullSecrets:
+      - name: secret64

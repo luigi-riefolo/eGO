@@ -61,7 +61,7 @@ func runEndPoints() error {
 
 	//loadCerts(gw)
 
-	gw.ListenAddr = fmt.Sprintf(":%d", conf.Alfa.Server.GatewayPort)
+	gw.ListenAddr = fmt.Sprintf(":%d", conf.Gateway.Server.GatewayPort)
 
 	log.Println("Loading service endpoints")
 

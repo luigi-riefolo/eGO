@@ -79,7 +79,7 @@ ${BOLD}OPTIONS${RESET}
 
 ${BOLD}EXAMPLES${RESET}
 
-    $ME --service alfa --registry localhost:5000
+    $ME --service gateway --registry localhost:5000
 
 END
 }

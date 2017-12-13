@@ -1,0 +1,22 @@
+# Gateway TOML definition.
+
+[gateway]
+
+name = "Gateway service"
+short_name = "gateway"
+
+[gateway.owner]
+name = "Luigi Riefolo"
+date_created = "2017-08-27T10:30:00+01:00"
+
+[gateway.server]
+host = "gateway"
+port = 10101
+is_gateway = true
+gateway_port = 10100
+micro_services = [ "gateway", "alfa" ]
+
+[gateway.database]
+server = "localhost"
+ports = [ 8001, 8001, 8002 ]
+connection_max = 5000

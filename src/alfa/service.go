@@ -1,108 +1,60 @@
 package alfa
 
 import (
-	"log"
-
 	"github.com/golang/protobuf/ptypes/empty"
 	"golang.org/x/net/context"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/metadata"
 
-	"github.com/luigi-riefolo/eGO/pkg/client"
 	"github.com/luigi-riefolo/eGO/pkg/config"
-	"github.com/luigi-riefolo/eGO/pkg/server"
+	"github.com/luigi-riefolo/eGO/pkg/service"
 	pb "github.com/luigi-riefolo/eGO/src/alfa/pb"
-	betapb "github.com/luigi-riefolo/eGO/src/beta/pb"
+	omegapb "github.com/luigi-riefolo/eGO/src/omega/pb"
 )
 
-// Service represents the Alfa service.
+// Service implements a AlfaServiceServer
 type Service struct {
-	conf       config.Config
-	betaClient betapb.BetaServiceClient
+	conf        config.Config
+	omegaClient omegapb.OmegaServiceClient
 }
 
-// NewAlfaService initialises the Alfa service server.
-func NewAlfaService(ctx context.Context, conf config.Config) pb.AlfaServiceServer {
+// New initialises the Alfa service.
+func New(ctx context.Context, conf config.Config) pb.AlfaServiceServer {
 	alfa := &Service{
 		conf: conf,
 	}
-
-	c, err := client.Get(ctx, conf.Beta)
-	if err != nil {
-		log.Fatalf("%v", err)
-	}
-	alfa.betaClient = c.(betapb.BetaServiceClient)
-
+	/*
+		c, err := client.Get(ctx, conf.Omega)
+		if err != nil {
+			log.Fatalf("%v", err)
+		}
+		alfa.omegaClient = c.(omegapb.OmegaServiceClient)
+	*/
 	return alfa
 }
 
-/*
-POC
-a gRPC server can handle multiple services by registering them.
-need to test which approach is faster:
-- each service runs as stand-alone
-- a server handles multiple services
-
-type Gamma struct {
-}
-
-func (s *Gamma) TestOp(ctx context.Context, req *empty.Empty) (*betapb.Message, error) {
-	return &betapb.Message{}, nil
-}
-
-func NewGammaService() pb.GammaServiceServer {
-	gammaSrv := &Gamma{}
-	return gammaSrv
-}
-*/
-
 // Serve starts listening and serving requests.
-func Serve(ctx context.Context, conf config.Config) *server.Server {
+func Serve(ctx context.Context, conf config.Config) *service.Service {
 
-	srv := server.NewServer(conf.Alfa)
+	svc := service.New(conf.Alfa)
 
-	alfaService := NewAlfaService(ctx, conf)
+	pb.RegisterAlfaServiceServer(
+		svc.GetgRPCServer(),
+		New(ctx, conf))
 
-	pb.RegisterAlfaServiceServer(srv.GetgRPCServer(), alfaService)
+	svc.Listen()
 
-	//pb.RegisterGammaServiceServer(srv.GetgRPCServer(), NewGammaService())
-
-	srv.Listen()
-
-	// initialize Prometheus metrics
-	srv.StartPrometheus()
-
-	return srv
-}
-
-// Get ...
-func (s *Service) Get(ctx context.Context, req *empty.Empty) (*pb.Message, error) {
-
-	err := grpc.SendHeader(ctx, metadata.New(map[string]string{
-		"foo": "foo1",
-		"bar": "bar1",
-	}))
-	if err != nil {
-		return nil, err
-	}
-	msg := &pb.Message{
-		Msg: "Hi there!!!",
-	}
-	return msg, nil
-}
-
-// Set ...
-func (s *Service) Set(ctx context.Context, req *pb.Message) (*empty.Empty, error) {
-	return &empty.Empty{}, nil
+	return svc
 }
 
 // Test ...
-func (s *Service) Test(ctx context.Context, req *empty.Empty) (*betapb.Message, error) {
-
-	msg, err := s.betaClient.Test(ctx, req)
-	if err != nil {
-		log.Printf("Test: %v", err)
+func (s *Service) Test(ctx context.Context, req *empty.Empty) (*pb.Message, error) {
+	msg := &pb.Message{
+		Msg: "OK ALFA!!!",
 	}
 
+	/*	_, err := s.omegaClient.Echo(ctx, &omegapb.Message{Msg: "YES"})
+		if err != nil {
+			log.Printf("Omega client err: %#v\n", err)
+		}
+	*/
 	return msg, nil
 }

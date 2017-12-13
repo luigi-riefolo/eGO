@@ -56,11 +56,11 @@ make config omega
 Build a service:
 
 ```
-./scripts/build.sh -s alfa
+./scripts/build.sh -s gateway
 ```
 or
 ```
-make run alfa
+make run gateway
 ```
 
 Build and run all the servers:
@@ -70,17 +70,17 @@ make run_all
 
 Test gateway:
 ```
-curl $(minikube service alfa --url)/v1/alfa/get
+curl $(minikube service gateway --url)/v1/gateway/get
 ```
 
 Start the gateway locally:
 
 ```
-go run src/alfa/cmd/main.go service -config $CONFIG_FILE
+go run src/gateway/cmd/main.go service -config $CONFIG_FILE
 
-BETA_SERVER_PORT=9090 go run src/alfa/cmd/main.go service -config conf/global_conf.toml
+ALFA_SERVER_PORT=9090 go run src/gateway/cmd/main.go service -config conf/global_conf.toml
 
-go run src/alfa/cmd/main.go service -config $CONFIG_FILE -opts BETA_SERVER_PORT=9090
+go run src/gateway/cmd/main.go service -config $CONFIG_FILE -opts ALFA_SERVER_PORT=9090
 ```
 
 ### Credits
@@ -95,7 +95,7 @@ Thanks to all the Open Source projects that inspired eGO:
 More to be mentioned.
 
 [1]: http://www.grpc.io/
-[2]: http://www.github.com/luigi.riefolo/alfa/contributors
+[2]: http://www.github.com/luigi.riefolo/gateway/contributors
 [3]: https://github.com/devsu/grpc-gateway-generator
 [4]: https://github.com/harlow/go-micro-services
 [5]: https://gist.github.com/turtlemonvh/38bd3d73e61769767c35931d8c70ccb4

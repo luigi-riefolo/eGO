@@ -1,0 +1,57 @@
+// Gateway Service
+
+syntax = "proto3";
+
+package gateway;
+
+option go_package = "gateway";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "github.com/luigi-riefolo/eGO/src/alfa/pb/alfa.proto";
+
+
+// Message represents a simple message sent to the Gateway service.
+message Message {
+	// Id represents the message identifier.
+	string id = 1;
+	// The message to be sent.
+	string msg = 2;
+}
+
+// Gateway service is system gateway.
+service GatewayService {
+	// Get method receives a simple message and returns it.
+	// The message posted as the id parameter will also be returned.
+	rpc Get(google.protobuf.Empty) returns (Message) {
+		option (google.api.http) = {
+            get: "/v1/alfa/get"
+		};
+	}
+    // Gateway method sets a simple message.
+    rpc Set(Message) returns (google.protobuf.Empty) {
+		option (google.api.http) = {
+			post: "/v1/alfa/set"
+            body: "*"
+		};
+	}
+
+	rpc Test(google.protobuf.Empty) returns (alfa.Message) {
+		option (google.api.http) = {
+			//get: "/v1/alfa/{id}/{msg}"
+			get: "/v1/alfa/test"
+		};
+	}
+}
+
+/*
+POC: multiple services handled by single gRPC server
+
+service GammaService {
+    rpc TestOp(google.protobuf.Empty) returns (alfa.Message) {
+		option (google.api.http) = {
+			get: "/v1/alfa/test"
+		};
+	}
+}
+*/

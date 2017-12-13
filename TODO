@@ -1,0 +1,42 @@
+#tomlv some-toml-file.toml
+#go-bindata -o data/bindata.go -pkg data data/*.json
+#
+use mockgen or mockery for mocks
+investigate how to use k8s secrets
+implement readiness and health check probes for k8s
+auto-generate the config maps for k8s
+distributed tracing
+distributed caching
+authentication and authorization
+keys & secret maintenance
+distributed key-value store consul
+distributed lock service zookeeper
+dependency installer
+kibana
+zipkin
+mesos
+use https://github.com/spf13/cobra
+convert .env to dev/prod/test in conf/
+
+go report and build badges
+
+can we use errors with "github.com/pkg/errors" which has wrap and stack???
+
+make stop, restart, replace
+
+The errors.Wrap function returns a new error that adds context to the original error by recording a stack trace at the point Wrap is called, and the supplied message.
+_, err := ioutil.ReadAll(r)
+if err != nil {
+        return errors.Wrap(err, "read failed")
+}
+
+
+errors.Cause will recursively retrieve the topmost error which does not implement causer, which is assumed to be the original cause
+switch err := errors.Cause(err).(type) {
+case *MyError:
+        // handle specifically
+default:
+        // unknown error
+}
+
+

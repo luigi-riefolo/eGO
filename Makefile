@@ -1,8 +1,12 @@
-include .env
+include conf/develop.env
 
 export
 
 
+# TODO:
+# make include conditional on type of environment, but don't know hot to
+# set/pass the type of environment. Which options do we have?
+#
 #VERSION=$(shell git rev-parse --abbrev-ref HEAD)
 #git rev-parse HEAD
 #git rev-parse --abbrev-ref HEAD

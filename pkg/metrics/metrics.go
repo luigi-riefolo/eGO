@@ -1,6 +1,9 @@
 package metrics
 
 /*
+// TODO:
+// check if the metrics produced in grpc prometheus do respect the rules of
+// metrics
 var (
 	// How often our /hello request durations fall into one of the defined buckets.
 	// We can use default buckets or set ones we are interested in.
@@ -24,24 +27,6 @@ var (
 func init() {
 	prometheus.MustRegister(duration)
 	prometheus.MustRegister(counter)
-}
-
-func main() {
-	addr := flag.String("http", "0.0.0.0:8000", "HTTP server address")
-	flag.Parse()
-
-	go func() {
-		sigchan := make(chan os.Signal, 1)
-		signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
-		<-sigchan
-	}()
-
-	mux := http.NewServeMux()
-	mux.HandleFunc("/hello", helloHandler)
-	mux.Handle("/metrics", promhttp.Handler())
-	if err := http.ListenAndServe(*addr, mux); err != nil {
-		log.Fatal(err)
-	}
 }
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {

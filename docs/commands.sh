@@ -16,9 +16,9 @@ curl $(minikube service hello-minikube --url)
 # check catalog
 curl http://localhost:5000/v2/_catalog
 
-curl  http://localhost:5000/v2/alfa/tags/list
+curl  http://localhost:5000/v2/gateway/tags/list
 
-curl  http://localhost:5000/v2/alfa/manifests/latest
+curl  http://localhost:5000/v2/gateway/manifests/latest
 
 DOCKER_API_VERSION= DOCKER_TLS_VERIFY= DOCKER_CERT_PATH= DOCKER_HOST= docker ps
 
@@ -35,7 +35,7 @@ kubectl get nodes
 
 kubectl get all
 
-kubectl replace --force -f src/alfa/conf/k8s-service.yaml
+kubectl replace --force -f src/gateway/conf/k8s-service.yaml
 
 # Determine service IP
 kubectl get service $SERVICE --output='jsonpath="{.spec.ports[0].nodePort}"'
@@ -74,15 +74,15 @@ CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -x -v -a -installsuffix cgo -o ma
 docker build -t alf:v1 .
 kubectl create -f k8s-deployment.yaml
 kubectl create -f k8s-service.yaml
-#kubectl run alfa --image=alfa:v1 --port=8080
+#kubectl run gateway --image=gateway:v1 --port=8080
 #kubectl expose deployment service --type=LoadBalancer
-minikube service alfa-gateway --url
+minikube service gateway-gateway --url
 
-kubectl logs alfa
-kubectl logs -f alfa-97854d8ff-9ss8w
+kubectl logs gateway
+kubectl logs -f gateway-97854d8ff-9ss8w
 
-kubectl delete service alfa
-kubectl delete deployment alfa
+kubectl delete service gateway
+kubectl delete deployment gateway
 
 
 kubectl create configmap prometheus-server-conf \
@@ -98,7 +98,7 @@ kubectl get rs
 
 # check pods with labels
 kubectl get pods --show-labels
-kubectl get pods -l app=alfa -o wide
+kubectl get pods -l app=gateway -o wide
 
 
 # Note: A Deployment’s rollout is triggered if and only if the Deployment’s pod template (that is, .spec.template) is changed, for example if the labels or container images of the template are updated. Other updates, such as scaling the Deployment, do not trigger a rollout.
@@ -106,9 +106,9 @@ kubectl get pods -l app=alfa -o wide
 kubectl set image deployment/nginx-deployment nginx=nginx:1.9.1
 
 
-docker build -t alfa .
+docker build -t gateway .
 
-docker tag alfa localhost:5000/alfa
+docker tag gateway localhost:5000/gateway
 
 docker push localhost:5000/registry-demo
 
@@ -126,7 +126,7 @@ docker ps -a -f status=exited
 #    -e SERVICE_NAME="$SERVICE_NAME" -e BUILD_ID="${BUILD_ID}" -e DEPLOYMENT_TYPE="service" \
 #    --hostname=${SERVICE_ARTIFACT} \
 #    --name $SERVICE_NAME  \
-#    --network "alfa_default" \
+#    --network "gateway_default" \
 #    --publish 6060:7000 \
 #    --rm ${IMAGE_NAME}
 
@@ -170,7 +170,7 @@ docker-compose -f docker-compose.am-test.yml up am-test-amapi nginx
 
 
 # Swagger
-docker run -p 80:8080 -e SWAGGER_JSON=/data/alfa.swagger.json -v $GOPATH/src/github.com/luigi-riefolo/eGO/src/alfa/pb/definitions:/data swaggerapi/swagger-ui
+docker run -p 80:8080 -e SWAGGER_JSON=/data/gateway.swagger.json -v $GOPATH/src/github.com/luigi-riefolo/eGO/src/gateway/pb/definitions:/data swaggerapi/swagger-ui
 
 
 

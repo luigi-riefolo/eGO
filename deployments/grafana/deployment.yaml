@@ -1,7 +1,7 @@
 ---
 # TODO: use https://github.com/grafana/grafana/blob/master/docs/sources/administration/provisioning.md
 # as soon as 4.7 is out
-apiVersion: extensions/v1beta1
+apiVersion: extensions/v1alfa1
 kind: Deployment
 metadata:
   name: grafana-deployment

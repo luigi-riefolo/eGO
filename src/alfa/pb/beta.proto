@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+// Alfa Service
+//
+// Alfa Service API consists of a single service which returns a message.
+package alfa;
+
+option go_package = "alfa";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+
+// Message represents a simple message sent to the Alfa service.
+message Message {
+	// Id represents the message identifier.
+	string id = 1;
+	// The message to be sent.
+	string msg = 2;
+}
+
+// Alfa service responds to incoming gateway requests.
+service AlfaService {
+	rpc Test(google.protobuf.Empty) returns (Message) {}
+}

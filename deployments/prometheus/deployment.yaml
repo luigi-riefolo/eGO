@@ -1,5 +1,5 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: extensions/v1alfa1
 kind: Deployment
 metadata:
   name: prometheus-deployment

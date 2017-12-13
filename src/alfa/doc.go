@@ -1,6 +1,0 @@
-package alfa
-
-/*
-Copyright
-
-*/

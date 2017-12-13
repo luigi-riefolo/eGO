@@ -5,10 +5,11 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/luigi-riefolo/eGO/pkg/config"
-	betaclient "github.com/luigi-riefolo/eGO/src/beta/client"
-	omegaclient "github.com/luigi-riefolo/eGO/src/omega/client"
 	"google.golang.org/grpc"
+
+	"github.com/luigi-riefolo/eGO/pkg/config"
+	alfaclient "github.com/luigi-riefolo/eGO/src/alfa/client"
+	omegaclient "github.com/luigi-riefolo/eGO/src/omega/client"
 )
 
 var (
@@ -19,7 +20,7 @@ var (
 		grpc.WithDecompressor(grpc.NewGZIPDecompressor()),
 		grpc.WithTimeout(config.ClientRequestTimeout),
 		grpc.WithMaxMsgSize(config.MaxMsgSize),
-		//func WithUnaryInterceptor(f UnaryClientInterceptor) DialOption
+		//grpc.WithUnaryInterceptor(RateLimiterInterceptor),
 		//func WithStatsHandler(h stats.Handler) DialOption
 		//func WithTransportCredentials(creds credentials.TransportCredentials) DialOption
 		//func WithPerRPCCredentials(creds credentials.PerRPCCredentials) DialOption
@@ -70,8 +71,8 @@ func Get(ctx context.Context, conf config.Service, opts ...grpc.DialOption) (int
 
 	switch conf.ShortName {
 
-	case "beta":
-		client = betaclient.New(conn)
+	case "alfa":
+		client = alfaclient.New(conn)
 	case "omega":
 		client = omegaclient.New(conn)
 	default:

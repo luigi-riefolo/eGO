@@ -12,7 +12,7 @@ set -e
 declare -A CONFIG_MAP
 SERVICE_NAME=
 ME=$(basename $0)
-USAGE_EXAMPLE="$ME --service alfa --proto"
+USAGE_EXAMPLE="$ME --service gateway --proto"
 
 function usage {
     BOLD=$(tput bold)

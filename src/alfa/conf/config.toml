@@ -1,8 +1,8 @@
-# Gateway TOML definition.
+# Alfa service TOML definition.
 
 [alfa]
 
-name = "Alfa service"
+name= "Alfa service"
 short_name = "alfa"
 
 [alfa.owner]
@@ -10,11 +10,9 @@ name = "Luigi Riefolo"
 date_created = "2017-08-27T10:30:00+01:00"
 
 [alfa.server]
-host = "alfa"
-port = 10101
-is_gateway = true
-gateway_port = 10100
-micro_services = [ "alfa", "beta" ]
+host = "localhost"
+port = 10102
+clients = [ "omega" ]
 
 [alfa.database]
 server = "localhost"

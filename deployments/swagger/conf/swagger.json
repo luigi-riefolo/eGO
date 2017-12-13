@@ -3,8 +3,8 @@
         "application/json"
     ],
     "definitions": {
-        "alfaMessage": {
-            "description": "Message represents a simple message sent to the Alfa service.",
+        "gatewayMessage": {
+            "description": "Message represents a simple message sent to the Gateway service.",
             "properties": {
                 "id": {
                     "description": "Id represents the message identifier.",
@@ -17,8 +17,8 @@
             },
             "type": "object"
         },
-        "betaMessage": {
-            "description": "Message represents a simple message sent to the Beta service.",
+        "alfaMessage": {
+            "description": "Message represents a simple message sent to the Alfa service.",
             "properties": {
                 "id": {
                     "description": "Id represents the message identifier.",
@@ -37,31 +37,31 @@
             "type": "object"
         }
     },
-    "host": "alfa:10100",
+    "host": "gateway:10100",
     "info": {
-        "description": "Alfa Service API consists of a single service which returns a message.",
-        "title": "Alfa Service",
+        "description": "Gateway Service API consists of a single service which returns a message.",
+        "title": "Gateway Service",
         "version": "version not set"
     },
     "paths": {
-        "/v1/alfa/get": {
+        "/v1/gateway/get": {
             "get": {
                 "operationId": "Get",
                 "responses": {
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#/definitions/alfaMessage"
+                            "$ref": "#/definitions/gatewayMessage"
                         }
                     }
                 },
                 "summary": "Get method receives a simple message and returns it.\nThe message posted as the id parameter will also be returned.",
                 "tags": [
-                    "AlfaService"
+                    "GatewayService"
                 ]
             }
         },
-        "/v1/alfa/set": {
+        "/v1/gateway/set": {
             "post": {
                 "operationId": "Set",
                 "parameters": [
@@ -70,7 +70,7 @@
                         "name": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/alfaMessage"
+                            "$ref": "#/definitions/gatewayMessage"
                         }
                     }
                 ],
@@ -82,25 +82,25 @@
                         }
                     }
                 },
-                "summary": "Alfa method sets a simple message.",
+                "summary": "Gateway method sets a simple message.",
                 "tags": [
-                    "AlfaService"
+                    "GatewayService"
                 ]
             }
         },
-        "/v1/beta/test": {
+        "/v1/alfa/test": {
             "get": {
                 "operationId": "Test",
                 "responses": {
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#/definitions/betaMessage"
+                            "$ref": "#/definitions/alfaMessage"
                         }
                     }
                 },
                 "tags": [
-                    "AlfaService"
+                    "GatewayService"
                 ]
             }
         }

@@ -2,9 +2,9 @@ FROM scratch
 
 MAINTAINER Luigi Riefolo <luigi.riefolo@gmail.com>
 
-##LABEL com.example.is-beta= \
+##LABEL com.example.is-alfa= \
 ##      com.example.is-production="" \
-##      com.example.version="0.0.1-beta" \
+##      com.example.version="0.0.1-alfa" \
 ##      com.example.release-date="2017-10-12"
 
 ARG GOPATH

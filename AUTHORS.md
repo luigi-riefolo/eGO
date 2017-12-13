@@ -1,4 +1,4 @@
-Alfa project authors (sorted alphabetically)
+eGO project authors (sorted alphabetically)
 ============================================
 
 * **[Luigi Riefolo](https://github.com/luigi-riefolo)**
