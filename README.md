@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Go Report Card](https://goreportcard.com/badge/github.com/luigi-riefolo/eGO?style=flat-square)](https://goreportcard.com/report/github.com/luigi-riefolo/eGO)
-[![Release](uttps://img.shields.io/github/release/luigi-riefolo/eGO.svg?style=flat-square)](https://github.com/luigi-riefolo/eGO/releases/latest)
+[![GitHub (pre-)release](https://img.shields.io/github/release/qubyte/rubidium/all.svg)](https://img.shields.io/github/release/luigi-riefolo/eGO.svg?style=flat-square)
 
 eGO is a project skeleton that uses Golang and gRPC.
 
