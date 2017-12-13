@@ -1,6 +1,8 @@
 # eGO - Enlightening Golang
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Go Report Card](https://goreportcard.com/badge/github.com/luigi-riefolo/alfa?style=flat-square)](https://goreportcard.com/report/github.com/luigi-riefolo/alfa)
+[![Release](https://img.shields.io/github/release/golang-standards/project-layout.svg?style=flat-square)](https://github.com/luigi-riefolo/eGO/releases/latest)
 
 eGO is a project skeleton that uses Golang and gRPC.
 
@@ -14,11 +16,14 @@ Users have to only define their proto definitions and implement the respective
 functions, all the rest (configuration, middlewares/interceptors, etc.) is
 provided by eGO.
 
+eGO can be used as your project template.
+
 _Note:_ this project is still experimental and not ready for production.
 
 ### Requirements
 
 [gRPC][1]
+
 [Docker][8]
 
 ### Setup
@@ -105,3 +110,4 @@ More to be mentioned.
 [9]: https://github.com/giantswarm/kubernetes-prometheus
 [10]: https://github.com/olivere/grpc
 [11]: https://medium.com/@harlow/tracing-grpc-calls-in-golang-with-google-stackdriver-b22495763a06
+[12]: https://github.com/golang-standards/project-layout
