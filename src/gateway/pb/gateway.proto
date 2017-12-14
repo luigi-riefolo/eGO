@@ -1,6 +1,6 @@
-// Gateway Service
-
 syntax = "proto3";
+
+// Gateway Service
 
 package gateway;
 
@@ -20,7 +20,7 @@ message Message {
 }
 
 // Gateway service is system gateway.
-service GatewayService {
+service Gateway {
 	// Get method receives a simple message and returns it.
 	// The message posted as the id parameter will also be returned.
 	rpc Get(google.protobuf.Empty) returns (Message) {

@@ -1,17 +1,16 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
 	// Project packages
 	"github.com/luigi-riefolo/eGO/pkg/config"
-	"github.com/luigi-riefolo/eGO/pkg/gateway"
-	"github.com/luigi-riefolo/eGO/pkg/server"
+	gw "github.com/luigi-riefolo/eGO/pkg/gateway"
+	"github.com/luigi-riefolo/eGO/pkg/service"
+	pb "github.com/luigi-riefolo/eGO/src/gateway/pb"
 )
 
 // TODO: create clients
@@ -35,48 +34,35 @@ func init() {
 	}
 }
 
-// runEndPoints ...
-func runEndPoints() error {
+func main() {
 
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
-	server.ContextTimeout(ctx)
+	service.ContextTimeout(ctx)
 
 	// set up the gateway instance
-	gw := gateway.Gateway{}
-	gw.Mux = runtime.NewServeMux()
-	gw.DialOpts = []grpc.DialOption{
+	opts := []grpc.DialOption{
 		grpc.WithInsecure(),
 		grpc.WithBackoffMaxDelay(config.BackoffDelay),
 		grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(config.MaxMsgSize)),
-		grpc.WithCompressor(grpc.NewGZIPCompressor()),
-		grpc.WithDecompressor(grpc.NewGZIPDecompressor()),
+		//		grpc.WithCompressor(grpc.NewGZIPCompressor()),
+		//		grpc.WithDecompressor(grpc.NewGZIPDecompressor()),
+		/*	grpc.WithTransportCredentials(gw.creds)}
+			grpc.WithStatsHandler()
+			grpc.WithUnaryInterceptor())
+		*/
 	}
-	/*	grpc.WithTransportCredentials(gw.creds)}
-		grpc.WithStatsHandler()
-		grpc.WithUnaryInterceptor())
-	*/
 
-	//loadCerts(gw)
-
-	gw.ListenAddr = fmt.Sprintf(":%d", conf.Gateway.Server.GatewayPort)
-
-	log.Println("Loading service endpoints")
-
-	// List of gateway endpoints
-
-	gw.Services = map[string]*server.Server{
+	services := service.List{
 	// List of services
 	}
 
-	return gw.ListenAndServe()
-}
-
-func main() {
-
-	if err := runEndPoints(); err != nil {
+	gwSrv, err := gw.New(ctx, conf.Gateway, opts, services, pb.RegisterGatewayServiceHandlerFromEndpoint)
+	if err != nil {
 		log.Fatal(err)
 	}
+
+	log.Fatal(gwSrv.ListenAndServe())
 }

@@ -36,9 +36,9 @@ type Gateway struct {
 }
 
 // New creates a gateway.
-func New(ctx context.Context, conf config.Service, opts []grpc.DialOption, svcList service.List, regFn registerFromEndpoint) (*Gateway, error) {
+func New(ctx context.Context, conf config.Service, opts []grpc.DialOption, regFn registerFromEndpoint) (Gateway, error) {
 
-	gw := &Gateway{
+	gw := Gateway{
 		Mux:      runtime.NewServeMux(),
 		DialOpts: opts,
 	}
@@ -47,18 +47,24 @@ func New(ctx context.Context, conf config.Service, opts []grpc.DialOption, svcLi
 
 	gw.ListenAddr = fmt.Sprintf(":%d", conf.Server.GatewayPort)
 
-	if err := regFn(ctx, gw.Mux, gw.ListenAddr, gw.DialOpts); err != nil {
-		return nil, fmt.Errorf("failed to register gateway endpoints: %v", err)
-	}
+	//	if err := regFn(ctx, gw.Mux, gw.ListenAddr, gw.DialOpts); err != nil {
+	//		return nil, fmt.Errorf("failed to register gateway endpoints: %v", err)
+	//	}
 
-	gw.Services = svcList
+	//gw.Services = svcList
 
 	return gw, nil
 }
 
 // LoadEndpoint ...
-func (gw *Gateway) LoadEndpoint(ctx context.Context, serviceConf config.Service) {
+func (gw *Gateway) LoadEndpoint(ctx context.Context, serviceConf config.Service, regFn registerFromEndpoint) {
 
+	addr := fmt.Sprintf(":%d", serviceConf.Server.GatewayPort)
+	gw.ListenAddr = addr
+
+	if err := regFn(ctx, gw.Mux, addr, gw.DialOpts); err != nil {
+		log.Fatalf("failed to register endpoint: %v", err)
+	}
 }
 
 // ListenAndServe ...

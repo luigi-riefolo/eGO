@@ -1,5 +1,63 @@
 {
+   "Alfa" : {
+      "Name" : "Alfa service",
+      "Database" : {
+         "Server" : "localhost",
+         "ConnMax" : 5000,
+         "Ports" : [
+            8001,
+            8001,
+            8002
+         ]
+      },
+      "Server" : {
+         "Host" : "localhost",
+         "Clients" : [
+            "omega"
+         ],
+         "Address" : "",
+         "Port" : 10102
+      },
+      "ShortName" : "alfa"
+   },
+   "Gateway" : {
+      "Database" : {
+         "Ports" : [
+            8001,
+            8001,
+            8002
+         ],
+         "Server" : "localhost",
+         "ConnMax" : 5000
+      },
+      "Name" : "Gateway service",
+      "Server" : {
+         "Host" : "gateway",
+         "Address" : "",
+         "IsGateway" : true,
+         "MicroServices" : [
+            "gateway",
+            "alfa"
+         ],
+         "Port" : 10101,
+         "GatewayPort" : 10100
+      },
+      "ShortName" : "gateway"
+   },
+   "ConfigFile" : "/Users/luigi/Workspace/Go/work/src/github.com/luigi-riefolo/eGO/conf/global_conf.toml",
    "Omega" : {
+      "Server" : {
+         "MicroServices" : [
+            "omega"
+         ],
+         "Port" : 10103,
+         "Address" : "",
+         "Host" : "omega",
+         "Clients" : [
+            "alfa"
+         ]
+      },
+      "ShortName" : "omega",
       "Name" : "Omega service",
       "Database" : {
          "Ports" : [
@@ -9,64 +67,6 @@
          ],
          "Server" : "localhost",
          "ConnMax" : 5000
-      },
-      "ShortName" : "omega",
-      "Server" : {
-         "Port" : 10103,
-         "Address" : "",
-         "Host" : "omega",
-         "MicroServices" : [
-            "omega"
-         ],
-         "Clients" : [
-            "alfa"
-         ]
       }
-   },
-   "Gateway" : {
-      "Name" : "Gateway service",
-      "Database" : {
-         "Ports" : [
-            8001,
-            8001,
-            8002
-         ],
-         "Server" : "localhost",
-         "ConnMax" : 5000
-      },
-      "ShortName" : "gateway",
-      "Server" : {
-         "MicroServices" : [
-            "gateway",
-            "alfa"
-         ],
-         "Host" : "gateway",
-         "Address" : "",
-         "GatewayPort" : 10100,
-         "IsGateway" : true,
-         "Port" : 10101
-      }
-   },
-   "Alfa" : {
-      "Name" : "Alfa service",
-      "Database" : {
-         "ConnMax" : 5000,
-         "Ports" : [
-            8001,
-            8001,
-            8002
-         ],
-         "Server" : "localhost"
-      },
-      "ShortName" : "alfa",
-      "Server" : {
-         "Port" : 10102,
-         "Host" : "localhost",
-         "Address" : "",
-         "Clients" : [
-            "omega"
-         ]
-      }
-   },
-   "ConfigFile" : "/Users/luigi/Workspace/Go/work/src/github.com/luigi-riefolo/eGO/conf/global_conf.toml"
+   }
 }

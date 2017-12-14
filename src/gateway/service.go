@@ -1,6 +1,7 @@
 package gateway
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/golang/protobuf/ptypes/empty"
@@ -8,7 +9,6 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 
-	"github.com/luigi-riefolo/eGO/pkg/client"
 	"github.com/luigi-riefolo/eGO/pkg/config"
 	"github.com/luigi-riefolo/eGO/pkg/service"
 	alfapb "github.com/luigi-riefolo/eGO/src/alfa/pb"
@@ -22,17 +22,17 @@ type Service struct {
 }
 
 // New initialises the Gateway service server.
-func New(ctx context.Context, conf config.Config) pb.GatewayServiceServer {
+func New(ctx context.Context, conf config.Config) pb.GatewayServer {
 	gateway := &Service{
 		conf: conf,
 	}
 
-	c, err := client.Get(ctx, conf.Alfa)
-	if err != nil {
-		log.Fatalf("%v", err)
-	}
-	gateway.alfaClient = c.(alfapb.AlfaServiceClient)
-
+	/*	c, err := client.Get(ctx, conf.Alfa)
+		if err != nil {
+			log.Fatalf("%v", err)
+		}
+		gateway.alfaClient = c.(alfapb.AlfaServiceClient)
+	*/
 	return gateway
 }
 
@@ -61,7 +61,7 @@ func Serve(ctx context.Context, conf config.Config) *service.Service {
 
 	svc := service.New(conf.Gateway)
 
-	pb.RegisterGatewayServiceServer(
+	pb.RegisterGatewayServer(
 		svc.GetgRPCServer(),
 		New(ctx, conf))
 
@@ -78,6 +78,7 @@ func Serve(ctx context.Context, conf config.Config) *service.Service {
 // Get ...
 func (s *Service) Get(ctx context.Context, req *empty.Empty) (*pb.Message, error) {
 
+	fmt.Println("GET")
 	err := grpc.SendHeader(ctx, metadata.New(map[string]string{
 		"foo": "foo1",
 		"bar": "bar1",

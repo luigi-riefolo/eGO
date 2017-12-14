@@ -8,14 +8,10 @@ import (
 	"time"
 
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
-	grpc_auth "github.com/grpc-ecosystem/go-grpc-middleware/auth"
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
-	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
-	"github.com/grpc-ecosystem/go-grpc-prometheus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
 
-	"github.com/luigi-riefolo/eGO/pkg/auth"
 	"github.com/luigi-riefolo/eGO/pkg/config"
 )
 
@@ -49,15 +45,15 @@ func New(conf config.Service) *Service {
 	}
 	opts := []grpc.ServerOption{
 		//grpc.InTapHandle(ratelimit.RateLimiter),
-		grpc.RPCCompressor(grpc.NewGZIPCompressor()),
-		grpc.RPCDecompressor(grpc.NewGZIPDecompressor()),
+		//	grpc.RPCCompressor(grpc.NewGZIPCompressor()),
+		//	grpc.RPCDecompressor(grpc.NewGZIPDecompressor()),
 		grpc.MaxMsgSize(config.MaxMsgSize),
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
-			LoggingInterceptor,
-			grpc_opentracing.UnaryServerInterceptor(),
-			TimeoutInterceptor,
-			grpc_prometheus.UnaryServerInterceptor,
-			grpc_auth.UnaryServerInterceptor(auth.Authorize),
+			//	LoggingInterceptor,
+			//		grpc_opentracing.UnaryServerInterceptor(),
+			//	TimeoutInterceptor,
+			//		grpc_prometheus.UnaryServerInterceptor,
+			//	grpc_auth.UnaryServerInterceptor(auth.Authorize),
 			//		grpc_ctxtags.UnaryServerInterceptor(
 			//			grpc_ctxtags.WithFieldExtractor(grpc_ctxtags.CodeGenRequestFieldExtractor)),
 			//		grpc_zap.UnaryServerInterceptor(llog.Logger, llog.LogOpts...),
