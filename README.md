@@ -1,8 +1,8 @@
 # eGO - Enlightening Golang
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Go Report Card](https://goreportcard.com/badge/github.com/luigi-riefolo/eGO?style=flat-square)](https://goreportcard.com/report/github.com/luigi-riefolo/eGO)
-#[![GitHub (pre-)release](https://img.shields.io/github/release/qubyte/rubidium/all.svg?style=flat-square)](https://www.github.com/luigi-riefolo/eGO/releases/latest)
+[![Coverage Report](https://gitlab.com/pantomath-io/demo-tools/badges/master/coverage.svg)](https://gitlab.com/pantomath-io/demo-tools/commits/master)
+[![Go Report Card](https://goreportcard.com/badge/gitlab.com/pantomath-io/demo-tools)](https://goreportcard.com/report/gitlab.com/pantomath-io/demo-tools)
 
 eGO is a microservice architecture that uses Golang and gRPC.
 
@@ -61,11 +61,11 @@ make config omega
 Build a service:
 
 ```
-./scripts/build.sh -s gateway
+./scripts/build.sh -s alfa
 ```
 or
 ```
-make run gateway
+make run alfa
 ```
 
 Build and run all the servers:
@@ -75,17 +75,17 @@ make run_all
 
 Test gateway:
 ```
-curl $(minikube service gateway --url)/v1/gateway/get
+curl $(minikube service alfa --url)/v1/alfa/get
 ```
 
 Start the gateway locally:
 
 ```
-go run src/gateway/cmd/main.go service -config $CONFIG_FILE
+go run src/alfa/cmd/main.go service -config $CONFIG_FILE
 
-ALFA_SERVER_PORT=9090 go run src/gateway/cmd/main.go service -config conf/global_conf.toml
+BETA_SERVER_PORT=9090 go run src/alfa/cmd/main.go service -config conf/global_conf.toml
 
-go run src/gateway/cmd/main.go service -config $CONFIG_FILE -opts ALFA_SERVER_PORT=9090
+go run src/alfa/cmd/main.go service -config $CONFIG_FILE -opts BETA_SERVER_PORT=9090
 ```
 
 ### Credits
@@ -100,7 +100,7 @@ Thanks to all the Open Source projects that inspired eGO:
 More to be mentioned.
 
 [1]: http://www.grpc.io/
-[2]: http://www.github.com/luigi.riefolo/gateway/contributors
+[2]: http://www.github.com/luigi.riefolo/eGO/contributors
 [3]: https://github.com/devsu/grpc-gateway-generator
 [4]: https://github.com/harlow/go-micro-services
 [5]: https://gist.github.com/turtlemonvh/38bd3d73e61769767c35931d8c70ccb4
@@ -110,4 +110,5 @@ More to be mentioned.
 [9]: https://github.com/giantswarm/kubernetes-prometheus
 [10]: https://github.com/olivere/grpc
 [11]: https://medium.com/@harlow/tracing-grpc-calls-in-golang-with-google-stackdriver-b22495763a06
-[12]: https://github.com/golang-standards/project-layout
+[12]: https://github.com/kevinburke/proto-make-example/blob/master/Makefile
+[13]: https://about.gitlab.com/2017/11/27/go-tools-and-gitlab-how-to-do-continuous-integration-like-a-boss

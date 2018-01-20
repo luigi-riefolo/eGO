@@ -166,6 +166,7 @@ function build_image {
     echo "Building new image"
 
     # compile
+    # TODO: race requires CGO enabled
     #GOOS=linux GOARCH=amd64 go build -x -v -race -a -installsuffix cgo -o ${SERVICE_NAME} ${EXE_PATH}
     #GOOS=darwin
     CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -x -v \
