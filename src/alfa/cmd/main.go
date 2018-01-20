@@ -27,7 +27,10 @@ import (
 // CORS: do we always need it or activate it for specific endpoints?????????
 
 var (
-	conf config.Config
+	conf    config.Config
+	service string
+	version string
+	build   string
 )
 
 func init() {
@@ -77,6 +80,8 @@ func runEndPoints() error {
 		conf.Alfa.Name: alfa.Serve(ctx, conf),
 		conf.Beta.Name: beta.Serve(ctx, conf),
 	}
+
+	log.Printf("Starting '%s' service, version '%s' (%s)\n", service, version, build)
 
 	return gw.ListenAndServe()
 }

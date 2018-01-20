@@ -119,8 +119,8 @@ func _BetaService_Test_Handler(srv interface{}, ctx context.Context, dec func(in
 		return srv.(BetaServiceServer).Test(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/beta.BetaService/Test",
+		SBetaServiceServererver: srv,
+		FullMethod:              "/beta.BetaService/Test",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BetaServiceServer).Test(ctx, req.(*google_protobuf1.Empty))

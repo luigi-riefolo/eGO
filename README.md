@@ -1,6 +1,9 @@
 # eGO - Enlightening Golang
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Coverage Report](https://gitlab.com/pantomath-io/demo-tools/badges/master/coverage.svg)](https://gitlab.com/pantomath-io/demo-tools/commits/master)
+[![Go Report Card](https://goreportcard.com/badge/gitlab.com/pantomath-io/demo-tools)](https://goreportcard.com/report/gitlab.com/pantomath-io/demo-tools)
+
 
 eGO is a project skeleton that uses Golang and gRPC.
 
@@ -105,3 +108,5 @@ More to be mentioned.
 [9]: https://github.com/giantswarm/kubernetes-prometheus
 [10]: https://github.com/olivere/grpc
 [11]: https://medium.com/@harlow/tracing-grpc-calls-in-golang-with-google-stackdriver-b22495763a06
+[12]: https://github.com/kevinburke/proto-make-example/blob/master/Makefile
+[13]: https://about.gitlab.com/2017/11/27/go-tools-and-gitlab-how-to-do-continuous-integration-like-a-boss

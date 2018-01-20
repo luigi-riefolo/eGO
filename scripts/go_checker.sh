@@ -15,7 +15,7 @@ cd $PROJECT_DIR
 
 goimports -w $FOLDERS
 
-errcheck $DIR
+errcheck -verbose $DIR
 structcheck $DIR
 varcheck $DIR
 staticcheck $DIR

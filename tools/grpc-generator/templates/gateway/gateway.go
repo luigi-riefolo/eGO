@@ -51,8 +51,6 @@ func runEndPoints() error {
 		grpc.WithInsecure(),
 		grpc.WithBackoffMaxDelay(config.BackoffDelay),
 		grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(config.MaxMsgSize)),
-		grpc.WithCompressor(grpc.NewGZIPCompressor()),
-		grpc.WithDecompressor(grpc.NewGZIPDecompressor()),
 	}
 	/*	grpc.WithTransportCredentials(gw.creds)}
 		grpc.WithStatsHandler()
