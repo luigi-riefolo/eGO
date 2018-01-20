@@ -10,17 +10,9 @@ import (
 
 	// Project packages
 	"github.com/luigi-riefolo/eGO/pkg/config"
-	"github.com/luigi-riefolo/eGO/pkg/gateway"
-	"github.com/luigi-riefolo/eGO/pkg/server"
+	gw "github.com/luigi-riefolo/eGO/pkg/gateway"
+	"github.com/luigi-riefolo/eGO/pkg/service"
 )
-
-// TODO: create clients
-// load and reload vars
-// metrics
-// auth
-// trace ids
-// check which log lib is best
-// CORS: do we always need it or activate it for specific endpoints?????????
 
 var (
 	conf config.Config
@@ -42,12 +34,12 @@ func runEndPoints() error {
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
-	server.ContextTimeout(ctx)
+	service.ContextTimeout(ctx)
 
 	// set up the gateway instance
-	gw := gateway.Gateway{}
-	gw.Mux = runtime.NewServeMux()
-	gw.DialOpts = []grpc.DialOption{
+	gwSrv := gw.Gateway{}
+	gwSrv.Mux = runtime.NewServeMux()
+	gwSrv.DialOpts = []grpc.DialOption{
 		grpc.WithInsecure(),
 		grpc.WithBackoffMaxDelay(config.BackoffDelay),
 		grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(config.MaxMsgSize)),
@@ -59,17 +51,17 @@ func runEndPoints() error {
 
 	//loadCerts(gw)
 
-	gw.ListenAddr = fmt.Sprintf(":%d", conf.Alfa.Server.GatewayPort)
+	gwSrv.ListenAddr = fmt.Sprintf(":%d", conf.Gateway.Server.GatewayPort)
 
 	log.Println("Loading service endpoints")
 
 	// List of gateway endpoints
 
-	gw.Services = map[string]*server.Server{
+	gwSrv.Services = map[string]*service.Service{
 	// List of services
 	}
 
-	return gw.ListenAndServe()
+	return gwSrv.ListenAndServe()
 }
 
 func main() {
@@ -77,6 +69,4 @@ func main() {
 	if err := runEndPoints(); err != nil {
 		log.Fatal(err)
 	}
-
-	log.Fatal(gwSrv.ListenAndServe())
 }

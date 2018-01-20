@@ -59,17 +59,12 @@ function trap_fn {
 trap trap_fn ERR SIGHUP SIGTERM SIGINT SIGFPE
 
 
-TEMP=`getopt -o h,p:,s: --long help,project:,service: \
+TEMP=`getopt -o h,s: --long help,service: \
              -n "$ME" -- "$@"`
 eval set -- "$TEMP"
 
 while true; do
     case "$1" in
-
-        -p | --project )
-            PROJECT_DIR="$2"
-            shift 2
-            ;;
 
         -s | --service )
             SERVICE_NAME="${2,,}"
@@ -94,8 +89,6 @@ while true; do
 done
 
 # script vars
-BASE="${PROJECT_DIR:-$BASE}"
-
 DESTINATION_PATH=$BASE/src/$SERVICE_NAME
 PROTOS_PATH=$DESTINATION_PATH/pb
 CONFIG_FILE=$DESTINATION_PATH/conf/*.json
@@ -216,7 +209,7 @@ function add_services {
         FN="pb.Register${SERVICE_NAME^}ServiceServer(srv.GetgRPCServer(), ${SERVICE_NAME}.NewService(conf))"
         sed -i "s#\(register the gRPC service server\)#\1\n$FN#" $SERVER_FILE
 
-        IMPORT_PATH="${PROJECT}/src/${SERVICE_NAME}"
+        IMPORT_PATH="${PROJECT_PATH}/src/${SERVICE_NAME}"
         IMPORTS+=("pb \"${IMPORT_PATH}/pb"\")
     }
 
@@ -235,18 +228,18 @@ function add_services {
             SEP=", "
 
             # format the import
-            IMPORT_PATH="${PROJECT}/src/${SERVICE}"
+            IMPORT_PATH="${PROJECT_PATH}/src/${SERVICE}"
             PB_PACKAGE="${SERVICE}pb"
             IMPORTS+=("${PB_PACKAGE,,} \"${IMPORT_PATH}/pb"\")
             IMPORTS+=("\"${IMPORT_PATH}\"")
 
             # format the endpoint
-            ENDPOINT="Register${SERVICE^}ServiceHandlerFromEndpoint"
+            ENDPOINT="Register${SERVICE^}HandlerFromEndpoint"
 
             LIS_ADDR="conf.${SERVICE^}"
             PARAMETERS="${LIS_ADDR}, ${PB_PACKAGE}.${ENDPOINT}"
             [[ $(is_gateway $SERVICE) == "true" ]] && {
-                ENDPOINTS+=("gw.LoadEndpoint(ctx, ${PARAMETERS})")
+                ENDPOINTS+=("gwSrv.LoadEndpoint(ctx, ${PARAMETERS})")
             }
             SERVICES+=("conf.${SERVICE^}.Name:  ${SERVICE}.Serve(ctx, conf),")
 

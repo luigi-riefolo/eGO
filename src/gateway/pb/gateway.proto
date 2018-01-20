@@ -21,6 +21,7 @@ message Message {
 
 // Gateway service is system gateway.
 service Gateway {
+
 	// Get method receives a simple message and returns it.
 	// The message posted as the id parameter will also be returned.
 	rpc Get(google.protobuf.Empty) returns (Message) {
@@ -28,6 +29,7 @@ service Gateway {
             get: "/v1/alfa/get"
 		};
 	}
+
     // Gateway method sets a simple message.
     rpc Set(Message) returns (google.protobuf.Empty) {
 		option (google.api.http) = {

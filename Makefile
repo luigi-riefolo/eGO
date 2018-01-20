@@ -41,7 +41,7 @@ dep:
 ## Generate a gRPC service
 grpc_service:
 	$(info generating gRPC service $(RUN_ARGS))
-	#@./tools/grpc-generator/generate.sh --service $(RUN_ARGS)
+	@./tools/grpc-generator/generate.sh --service $(RUN_ARGS)
 
 ## Generate all the gRPC services
 all_config:

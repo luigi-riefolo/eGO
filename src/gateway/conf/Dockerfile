@@ -2,33 +2,22 @@ FROM scratch
 
 MAINTAINER Luigi Riefolo <luigi.riefolo@gmail.com>
 
-##LABEL com.example.is-alfa= \
-##      com.example.is-production="" \
-##      com.example.version="0.0.1-alfa" \
-##      com.example.release-date="2017-10-12"
-
-ARG GOPATH
 ARG CONFIG_FILE
-ARG SERVICE_NAME
-ARG PROJECT
+ARG SERVICE
+ARG VERSION
 
-#WORKDIR ${GOPATH}/src/${PROJECT}/
+LABEL service=${SERVICE} \
+    version=${VERSION}
 
 #HEALTHCHECK --interval=5s --timeout=5s --retries=3 CMD curl -f http://localhost:9090/health || exit 1
 
-##ADD ca-certificates.crt /etc/ssl/certs/
+#ADD ca-certificates.crt /ssl/certs/
 
-## Usage: USER [UID]
-##USER 751
-##ADD /Users/luigi/Workspace/gateway/src/gateway/cmd/gateway /
-
-##ADD . /go/src/github.com/luigi-riefolo/eGO/gateway
-##RUN go install github.com/luigi-riefolo/eGO/gateway/cmd
-##ENTRYPOINT ["/go/bin/gateway"]
+#USER 751
 
 ADD $CONFIG_FILE /
 
-ADD src/${SERVICE_NAME}/cmd/${SERVICE_NAME} /
+ADD src/${SERVICE}/cmd/${SERVICE} /
 
 EXPOSE 8080
 
