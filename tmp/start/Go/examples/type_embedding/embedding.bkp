@@ -1,0 +1,32 @@
+package main
+
+import "fmt"
+
+// User ...
+type User struct {
+	// ID ...
+	ID int
+	// Name, Location ...
+	Name, Location string
+}
+
+// Greetings ...
+func (u *User) Greetings() string {
+	return fmt.Sprintf("Hi %s from %s",
+		u.Name, u.Location)
+}
+
+// Player ...
+type Player struct {
+	User
+	GameID int
+}
+
+func main() {
+	p := Player{}
+	p.ID = 42
+	p.Name = "Matt"
+	p.Location = "LA"
+	fmt.Println(p.Greetings())
+
+}

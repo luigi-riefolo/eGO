@@ -1,0 +1,159 @@
+# System-wide .bashrc file for interactive bash(1) shells.
+if [ -z "$PS1" ]; then
+return
+fi
+
+green=$(tput setaf 2)
+red=$(tput setaf 1)
+bold=$(tput bold)
+reset=$(tput sgr0)
+
+PS1='\[${red}${bold}\]\u@\[${green}\]\w > \[${reset}\]'
+
+# Make bash check its window size after a process completes
+shopt -s checkwinsize
+
+[ -r "/etc/bashrc_$TERM_PROGRAM" ] && . "/etc/bashrc_$TERM_PROGRAM"
+
+
+# Variables
+set -a
+
+EDITOR=vim
+
+WORKSPACE=$HOME/Workspace
+
+# Go settings
+APPDIR=$WORKSPACE/Go/build/godoc-app
+APPENGINE_SDK=$WORKSPACE/Go/go_appengine
+
+GOPATH=$WORKSPACE/Go/work
+GOROOT=$WORKSPACE/Go/source/go
+GOROOT_BOOTSTRAP=$(realpath $(ls -t /usr/local/Cellar/go | head -1 ))
+
+PATH=$PATH:$GOPATH/bin
+PATH=$PATH:$GOROOT/bin
+PATH=$PATH:$WORKSPACE/Go/source/go_appengine/
+
+PATH=$PATH:/usr/local/$(basename /usr/local/autoconf*)/bin
+PATH=$PATH:/Applications/CMake.app/Contents/bin
+PATH=/usr/local/sbin:$PATH
+
+# Gnu coreutils
+PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+MANPATH=/usr/local/opt/coreutils/libexec/gnuman:$MANPATH
+
+GIT_COMMITTER_NAME="Luigi Riefolo"
+GIT_AUTHOR_NAME="Luigi Riefolo"
+GIT_COMMITTER_EMAIL="luigi.riefolo@gmail.com"
+GIT_AUTHOR_EMAIL="luigi.riefolo@gmail.com"
+
+HISTTIMEFORMAT="%h/%d - %H:%M:%S "
+
+set +a
+
+
+# Aliases
+alias ls="ls -G"
+alias netstat="sudo lsof -i -P"
+alias resource="source /etc/bashrc"
+alias sudo='sudo '
+alias take_snapshot="VBoxManage snapshot $vmName take "$(date +%d-%m-%y_%H:%M)""
+alias vi="/usr/local/bin/vim"
+alias vi-shortcuts="less /Users/luigi/Documents/Notes/vi-shortcuts.txt"
+alias showHiddenFiles='defaults write com.apple.finder AppleShowAllFiles YES;killall Finder /System/Library/CoreServices/Finder.app'
+alias hideHiddenFiles='defaults write com.apple.finder AppleShowAllFiles NO;killall Finder /System/Library/CoreServices/Finder.app'
+
+
+# Functions
+vmName="Fedora-64"
+vmIP="192.168.1.200"
+
+function is_vm_running {
+    VBoxManage list runningvms | grep $vmName
+}
+
+
+function connect_to_proteus {
+    if [[ ! $(is_vm_running) ]]
+    then
+        echo "VM \"$vmName\" not started yet. Booting..."
+        start_proteus
+        echo -en "Waiting for SSHD"
+        cnt=1
+        while [[ $cnt -lt 20 ]]
+        do
+            echo -n "."
+            cnt=$((cnt+1))
+            sleep 1
+        done
+        echo -e "\n"
+        ssh -o ConnectTimeout=30 proteus@$vmIP
+    else
+        ssh -o ConnectTimeout=30 proteus@$vmIP
+    fi
+}
+
+
+function poweroff_proteus {
+    if [[ $(is_vm_running) ]]
+    then
+        echo "Powering off \"$vmName\""
+    else
+        echo "VM \"$vmName\" is already powered off"
+        return 0
+    fi
+
+    VBoxManage controlvm $vmName poweroff || return 1
+
+    echo -en "Waiting for \"$vmName\" VM to power off"
+    cnt=1
+    while [[ $(ping -c1 -q $vmIP )  && $cnt < 120 ]]
+    do
+        echo -ne "."
+        cnt=$((cnt + 1))
+    done
+
+    echo "Network is down"
+    echo "Checking VM state"
+    if [[ $(is_vm_running) ]]
+    then
+        echo "${bold}ERROR:${reset} VM \"$vmName\" is still running"
+    else
+        echo "VM is effectively down"
+    fi
+}
+
+
+function start_proteus {
+    if [[ ! $(is_vm_running) ]]
+    then
+        VBoxManage startvm "$vmName" --type headless || return 1
+    else
+        echo "VM \"$vmName\" is already running"
+        return 0
+    fi
+
+    echo -en "Waiting for \"Fedora\" VM to boot"
+    cnt=1
+    while [[ $cnt -lt 120 ]]
+    do
+        ping -q -W 1000 -c1 -q $vmIP &> /dev/null
+        if [[ $? -eq 0 ]]
+        then
+            break
+        fi
+        sleep 1
+        echo -en "."
+        cnt=$((cnt+1));
+    done
+
+    if [[ $cnt -eq 120 ]]
+    then
+        echo "${bold}Timed out!${reset}"
+        return 1
+    fi
+
+    echo -e "\nVM is running"
+    return 0
+}
