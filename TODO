@@ -40,3 +40,12 @@ default:
 }
 
 
+// TODO: create clients
+// load and reload vars
+// metrics
+// auth
+// trace ids
+// check which log lib is best
+// CORS: do we always need it or activate it for specific endpoints?????????
+
+

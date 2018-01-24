@@ -92,10 +92,10 @@ go run src/alfa/cmd/main.go service -config $CONFIG_FILE -opts BETA_SERVER_PORT=
 
 Thanks to all the Open Source projects that inspired eGO:
 
-* [gRPC][1]
 * [grpc-gateway-generator][3]
 * [go-micro-services][4]
 * [Golang Project Makefile Template][5]
+* [prometheus-on-kubernetes][7]
 
 More to be mentioned.
 
@@ -104,7 +104,6 @@ More to be mentioned.
 [3]: https://github.com/devsu/grpc-gateway-generator
 [4]: https://github.com/harlow/go-micro-services
 [5]: https://gist.github.com/turtlemonvh/38bd3d73e61769767c35931d8c70ccb4
-[6]: http://marselester.com/prometheus-on-kubernetes.html
 [7]: https://github.com/marselester/prometheus-on-kubernetes
 [8]: https://www.docker.com
 [9]: https://github.com/giantswarm/kubernetes-prometheus

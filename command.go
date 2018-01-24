@@ -3,22 +3,11 @@ package main
 import (
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 
-	"github.com/gorilla/mux"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"gitlab.dms.car2go.com/ams/pkg/handlers"
-	"gitlab.dms.car2go.com/ams/pkg/middleware"
-	"gitlab.dms.car2go.com/ams/src/order"
-)
-
-// Golang microservice template
-
-const (
-//	port = ":8080"
 )
 
 var (
@@ -216,16 +205,10 @@ func initConfig() {
 func main() {
 	log.Printf("Starting '%s' service, version '%s' (%s)\n", service, version, build)
 
-	router := mux.NewRouter()
-	router.HandleFunc("/order", order.OrderHandler)
-	router.HandleFunc("/health", handlers.HealthHandler)
-	http.Handle("/", middleware.Chain(router))
-
 	if err := rootCmd.Execute(); err != nil {
 		log.Fatal(err)
 	}
 
 	//log.Printf("Server listening on %s\n", port)
 	//log.Fatalln(http.ListenAndServe(port, nil))
-
 }
